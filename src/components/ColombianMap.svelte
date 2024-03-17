@@ -25,7 +25,7 @@
     export let selectedProvinceIndex;
     export let menuPosition;
     export let menuVisible;
-    export let totalLevel;
+    export const totalLevel = 0;
 
     let tooltipVisible = false;
     let tooltipPosition = {x: 0, y: 0};
@@ -70,12 +70,12 @@
     };
 
     function darkenColor(color, percent) {
-        const num = parseInt(color.replace("#",""), 16),
+        const num = parseInt(color.replace("#", ""), 16),
             amt = Math.round(2.55 * percent),
             R = (num >> 16) - amt,
             B = (num >> 8 & 0x00FF) - amt,
             G = (num & 0x0000FF) - amt;
-        return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+        return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
     }
 
     const handleOutsideClick = () => {
@@ -135,6 +135,11 @@
                     on:click={handleProvinceClick}
                     on:mouseover={handleMouseEnter}
                     on:mouseleave={handleMouseLeave}
+                    on:focus={handleProvinceClick}
+                    on:blur={handleProvinceClick}
+                    on:keydown={(event) => { if (event.key === 'Enter') handleProvinceClick(event); }}
+                    tabindex="0"
+                    role="button"
             >
 
             </path>

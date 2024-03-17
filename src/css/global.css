@@ -14,11 +14,6 @@ body {
   drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
 }
 
-html.dark {
-  background-color: #0d0950;
-  color: #fff;
-}
-
-.dark .nav-links a {
-  color: #fff;
+*:focus {
+  outline: 0 !important;
 }

@@ -1,8 +1,7 @@
 <script>
     import ColombiaMap from '../components/ColombianMap.svelte';
     import {PROVINCES, MENU_OPTIONS} from '../components/utils/constants.svelte';
-    import {getContext, onMount, setContext} from 'svelte';
-    import {levelArrayToString} from '../components/utils/levelConverter.svelte';
+    import {setContext} from 'svelte';
     import {writable} from "svelte/store";
 
     // Create a writable store for the array of levels
@@ -67,7 +66,7 @@
                 </ul>
             </div>
         </aside>
-        <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
+        <main class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
             <div class="w-full rounded-xl bg-blue-200 p-2">
                 <ColombiaMap
                         bind:selectedProvinceIndex={selectedProvinceIndex}
@@ -86,17 +85,22 @@
                 >
 
                     <div>
-                        <div class="menu-header" on:click={() => window.open(searchUrl, '_blank')}>
+                        <a class="menu-header"
+                           href={searchUrl}
+                        >
                             {selectedProvinceName} ↗
-                        </div>
+                        </a>
                         {#each MENU_OPTIONS as {label, level}}
-                            <div
+                            <button
                                     class="level-{level}"
                                     level={level}
                                     on:click={handleLevelClick}
-                            >
+                                    on:keydown={(event) => {
+                                        if (event.key === 'Enter' || event.key === ' ')
+                                        {handleLevelClick(event);}}
+                                    }>
                                 {label}
-                            </div>
+                            </button>
                         {/each}
                     </div>
                 </div>
@@ -117,12 +121,7 @@
         z-index: 1000;
     }
 
-    .menu-header,
-    .level-5,
-    .level-4,
-    .level-3,
-    .level-2,
-    .level-1 {
+    .menu-header {
         display: flex;
         min-height: 25px;
         align-items: center;
