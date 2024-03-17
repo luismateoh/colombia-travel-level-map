@@ -32,9 +32,9 @@
           {user?.email}
         </p>
       </div>
-      <Button href="/dashboard" variant="ghost">
+      <Button href="/map" variant="ghost">
         <DashboardIcon />
-        <p class="text-sm">Dashboard</p>
+        <p class="text-sm">Map</p>
       </Button>
 
       <form action="/api/auth/signout">

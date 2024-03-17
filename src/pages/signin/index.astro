@@ -10,7 +10,7 @@ const description =
 const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 if (user) {
-  return Astro.redirect("/dashboard");
+  return Astro.redirect("/map");
 }
 ---
 

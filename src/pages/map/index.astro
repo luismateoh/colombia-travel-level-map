@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Map from "../../components/Map.svelte";
+import Test from "../../components/Test.svelte";
+import Navbar from "../../components/Navbar.svelte";
+import getUserData from "../../firebase/utils/auth/getUserData";
+
+/* Check current session */
+const sessionCookie = Astro.cookies.get("session")?.value ?? null;
+
+const user = await getUserData(sessionCookie);
+
+if (!user) {
+    return Astro.redirect("/signin");
+}
+
+const title = "Dashboard - Astro Starter Pack";
+const description = "Dashboard page to view and manage firebase data";
+---
+
+<Layout title="Map">
+    <Navbar {user} client:load/>
+    <div class="w-full flex justify-center my-16">
+        <Map class="w-full flex justify-center" client:load/>
+    </div>
+</Layout>

@@ -1,13 +1,13 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBu6KkVzDWVgYPf4UPM08rFowqy5ayNMTc",
-  authDomain: "fir-astro-starter.firebaseapp.com",
-  projectId: "fir-astro-starter",
-  storageBucket: "fir-astro-starter.appspot.com",
-  messagingSenderId: "996337362101",
-  appId: "1:996337362101:web:47d0d82c326e84fe29cafc",
-  measurementId: "G-ZLM4QPD3KQ",
+  apiKey: "AIzaSyDOL8M2R715UFHVC63qj3AvN-1-k6id9oE",
+  authDomain: "interactive-map-col.firebaseapp.com",
+  projectId: "interactive-map-col",
+  storageBucket: "interactive-map-col.appspot.com",
+  messagingSenderId: "175449561687",
+  appId: "1:175449561687:web:f2927598390548d9462112",
+  measurementId: "G-SSSVXCY837"
 };
 
 export const app = initializeApp(firebaseConfig);

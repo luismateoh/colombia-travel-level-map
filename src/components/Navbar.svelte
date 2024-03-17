@@ -3,6 +3,7 @@
   import UserDropdown from "@/components/UserDropdown.svelte";
   import { Button } from "@/components/base/button";
   import type { User } from "firebase/auth";
+  import ThemeIcon from "@/components/ThemeIcon.svelte";
   export let user: User;
   let scrolled = false;
 
@@ -34,9 +35,11 @@
         height="30"
         class="mr-2 rounded-sm"
       />
-      <p class="ml-5 font-bold">Astro</p>
+      <p class="ml-5 font-bold">Colombia Map</p>
     </a>
-    <div>
+
+    <div class="flex gap-6">
+      <ThemeIcon />
       {#if user}
         <UserDropdown {user} />
       {:else}

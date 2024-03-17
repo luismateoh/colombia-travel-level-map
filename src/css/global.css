@@ -1,3 +1,24 @@
 body {
   background-color: #fbfcff;
 }
+
+.map-tooltip {
+  position: absolute;
+  background: #fff;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 900;
+  font-size: 0.875rem;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03))
+  drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+}
+
+html.dark {
+  background-color: #0d0950;
+  color: #fff;
+}
+
+.dark .nav-links a {
+  color: #fff;
+}

@@ -9,7 +9,7 @@ const description = "Reset your password to regain access to your account.";
 const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 if (user) {
-  return Astro.redirect("/dashboard");
+  return Astro.redirect("/map");
 }
 ---
 

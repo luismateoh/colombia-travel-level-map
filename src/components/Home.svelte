@@ -19,7 +19,7 @@
     <div class="max-w-md w-full rounded-xl shadow-lg p-5 mt-16 bg-white">
       <div class="flex flex-col items-center justify-center gap-4">
         <Button
-          href="/dashboard"
+          href="/map"
           variant="outlined"
           class="w-full transform hover:-translate-y-1">Go to Dashboard</Button
         >
