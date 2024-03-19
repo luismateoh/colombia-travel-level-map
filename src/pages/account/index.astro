@@ -10,13 +10,13 @@ const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 
 if (!user) {
-  return Astro.redirect("/signin");
+    return Astro.redirect("/signin");
 }
 const title = "Account - Astro Starter Pack";
 const description = "Account page to manage account settings";
 ---
 
 <Layout {description} {title}>
-  <Navbar {user} client:load />
-  <EditAccountForm {user} client:load />
+    <Navbar {user} client:load/>
+    <EditAccountForm {user} client:load/>
 </Layout>

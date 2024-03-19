@@ -30,7 +30,7 @@
                 window.location.assign(redirectedUrl);
             }
         } catch (error) {
-            console.error("Error during sign in:", error);
+            console.error("Error al iniciar sesión:", error);
             errorMessage = getFriendlyErrorMessage(error);
         }
         loading = false;
@@ -44,19 +44,19 @@
         <div>
             <h1 class="mt-6 text-center text-3xl font-extrabold text-black">
                 <!-- Adjusted to black color here -->
-                Sign in
+                Iniciar sesión
             </h1>
             <p class="mt-2 text-center text-sm text-black/80">
                 New?
                 <a href="/signup" class="font-medium text-black hover:text-black/70">
-                    Create an account
+                    Crear una cuenta
                 </a>
             </p>
         </div>
         <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
             <div class="rounded-md space-y-4">
                 <div>
-                    <label for="email" class="sr-only">Email</label>
+                    <label for="email" class="sr-only">Correo electrónico</label>
                     <Input
                             bind:value={email}
                             type="email"
@@ -66,7 +66,7 @@
                     />
                 </div>
                 <div>
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Contraseña</label>
                     <Input
                             bind:value={password}
                             type="password"
@@ -79,7 +79,7 @@
                                 href="/forgot-password"
                                 class="font-medium text-sm text-black hover:text-black/70"
                         >
-                            Forgot your password?
+                            ¿Ha olvidado su contraseña?
                         </a>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                 <span class="w-full border-t"/>
             </div>
             <div class="relative flex justify-center text-xs uppercase">
-                <span class="bg-white px-2 text-[#71717a]">Or continue with</span>
+                <span class="bg-white px-2 text-[#71717a]">O continuar con</span>
             </div>
         </div>
 

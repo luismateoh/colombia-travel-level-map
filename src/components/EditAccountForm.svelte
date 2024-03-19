@@ -35,10 +35,10 @@
         try {
             const updatedUser = await fetchUpdateUser(updates);
             console.log(updatedUser);
-            successMessage = "Successfully updated..";
+            successMessage = "Actualizado con éxito...";
             user = {...user, ...updatedUser};
         } catch (error) {
-            console.error("Error updating account:", error);
+            console.error("Error al actualizar la cuenta:", error);
             errorMessage = getFriendlyErrorMessage(error);
         }
         loading = false;
@@ -51,7 +51,7 @@
     <div class="max-w-md w-full space-y-8 p-6 rounded-xl shadow-lg bg-white">
         <div>
             <h1 class="mt-6 text-center text-3xl font-extrabold text-black">
-                Edit Account
+                Editar cuenta
             </h1>
         </div>
         <form
@@ -60,7 +60,7 @@
         >
             <div class="rounded-md shadow-sm space-y-4">
                 <div>
-                    <label for="name" class="sr-only">Name</label>
+                    <label for="name" class="sr-only">Nombre</label>
                     <Input
                             bind:value={name}
                             type="text"
@@ -70,7 +70,7 @@
                     />
                 </div>
                 <div>
-                    <label for="email" class="sr-only">Email</label>
+                    <label for="email" class="sr-only">Correo electrónico</label>
                     <Input
                             bind:value={email}
                             type="email"
@@ -95,7 +95,7 @@
                     <LoadingButton class="w-full" type="submit"/>
                 {:else}
                     <Button disabled={!hasChanged} class="w-full" type="submit"
-                    >Save Changes
+                    >Guardar cambios
                     </Button
                     >
                 {/if}

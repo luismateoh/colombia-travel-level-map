@@ -1,11 +1,11 @@
 <script context="module">
 
-        import Bed from "@/components/icons/Bed.svelte";
-        import House from "@/components/icons/House.svelte";
-        import Explore from "@/components/icons/Explore.svelte";
-        import Signpost from "@/components/icons/Signpost.svelte";
-        import Cross from "@/components/icons/Cross.svelte";
-        import Airplane from "@/components/icons/Airplane.svelte";
+    import Bed from "@/components/icons/Bed.svelte";
+    import House from "@/components/icons/House.svelte";
+    import Explore from "@/components/icons/Explore.svelte";
+    import Signpost from "@/components/icons/Signpost.svelte";
+    import Cross from "@/components/icons/Cross.svelte";
+    import Airplane from "@/components/icons/Airplane.svelte";
 
 
     export const PROVINCE_LEVEL_FILLS = [
@@ -17,23 +17,14 @@
         '#e84c3d',
     ];
 
-        export const MENU_OPTIONS = [
-            {icon: House, label: 'Viví ahí', level: 5, fill: '#e84c3d', textColor: '#ffffff'},
-            {icon: Bed, label: 'Me quede ahí', level: 4, fill: '#d58337', textColor: '#ffffff'},
-            {icon: Explore, label: 'Visité ahí', level: 3, fill: '#f3c218', textColor: '#ffffff'},
-            {icon: Airplane, label: 'Aterrice ahí', level: 2, fill: '#30cc70', textColor: '#ffffff'},
-            {icon: Signpost, label: 'Pasé por ahí', level: 1, fill: '#3598db', textColor: '#ffffff'},
-            {icon: Cross, label: 'Nunca estuve ahí', level: 0, fill: '#ffffff', textColor: '#000000'},
-        ];
-
- /*   export const MENU_OPTIONS = [
-        {label: 'Viví ahí', level: 5, fill: '#e84c3d'},
-        {label: 'Me quede ahí', level: 4, fill: '#d58337'},
-        {label: 'Visité ahí', level: 3, fill: '#f3c218'},
-        {label: 'Aterrice ahí', level: 2, fill: '#30cc70'},
-        {label: 'Pasé por ahí', level: 1, fill: '#3598db'},
-        {label: 'Nunca estuve ahí', level: 0, fill: 'white'},
-    ];*/
+    export const MENU_OPTIONS = [
+        {icon: House, label: 'Viví ahí', level: 5, fill: '#e84c3d', textColor: '#ffffff'},
+        {icon: Bed, label: 'Me quede ahí', level: 4, fill: '#d58337', textColor: '#ffffff'},
+        {icon: Explore, label: 'Visité ahí', level: 3, fill: '#f3c218', textColor: '#ffffff'},
+        {icon: Airplane, label: 'Aterrice ahí', level: 2, fill: '#30cc70', textColor: '#ffffff'},
+        {icon: Signpost, label: 'Pasé por ahí', level: 1, fill: '#3598db', textColor: '#ffffff'},
+        {icon: Cross, label: 'Nunca estuve ahí', level: 0, fill: '#ffffff', textColor: '#000000'},
+    ];
 
     // The order of this array is strictly important as it's used in encoding/decoding URL
     export const PROVINCES = [

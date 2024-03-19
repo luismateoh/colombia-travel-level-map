@@ -14,7 +14,7 @@
                 window.location.assign(redirectedUrl);
             }
         } catch (error) {
-            console.error("Error during sign in:", error);
+            console.error("Error al iniciar sesión:", error);
             errorMessage = getFriendlyErrorMessage(error);
         }
     }
@@ -31,7 +31,7 @@
             <p class="mt-2 text-center text-sm text-black/80">
                 Already have an account?
                 <a href="/signin" class="font-medium text-black hover:text-black/70">
-                    Sign in
+                    Iniciar sesión
                 </a>
             </p>
         </div>
@@ -48,7 +48,7 @@
                     />
                 </div>
                 <div>
-                    <label for="email" class="sr-only">Email</label>
+                    <label for="email" class="sr-only">Correo electrónico</label>
                     <Input
                             bind:value={email}
                             type="email"
@@ -58,7 +58,7 @@
                     />
                 </div>
                 <div>
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Contraseña</label>
                     <Input
                             bind:value={password}
                             type="password"
@@ -75,7 +75,7 @@
                 </div>
             {/if}
             <div>
-                <Button class="w-full" type="submit">Sign up</Button>
+                <Button class="w-full" type="submit">Inscríbete</Button>
             </div>
         </form>
         <div class="relative">
@@ -83,7 +83,7 @@
                 <span class="w-full border-t"/>
             </div>
             <div class="relative flex justify-center text-xs uppercase">
-                <span class="bg-white px-2 text-[#71717a]">Or continue with</span>
+                <span class="bg-white px-2 text-[#71717a]">O continuar con</span>
             </div>
         </div>
         <div>

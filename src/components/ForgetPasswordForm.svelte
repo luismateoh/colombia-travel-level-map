@@ -14,9 +14,9 @@
         loading = true;
         try {
             await sendPasswordResetEmail(auth, email);
-            successMessage = "Please check your email to reset your password.";
+            successMessage = "Consulta tu correo electrónico para restablecer tu contraseña.";
         } catch (error) {
-            console.error("Error during password reset:", error);
+            console.error("Error al restablecer la contraseña:", error);
             errorMessage = getFriendlyErrorMessage(error);
         }
         loading = false;
@@ -29,10 +29,10 @@
     <div class="max-w-md w-full space-y-8 p-6 rounded-xl shadow-lg bg-white">
         <div>
             <h1 class="mt-6 text-center text-3xl font-extrabold text-black">
-                Reset Password
+                Restablecer contraseña
             </h1>
             <p class="mt-2 text-center text-sm text-black/80">
-                Enter the email associated with your account.
+                Introduzca el correo electrónico asociado a su cuenta.
             </p>
         </div>
         <form class="mt-8 space-y-6" on:submit|preventDefault={handlePasswordReset}>
@@ -64,7 +64,7 @@
                 {:else}
                     <Button class="w-full" type="submit">
                         <Mail/>
-                        Send Reset Email
+                        Enviar correo electrónico de restablecimiento
                     </Button
                     >
                 {/if}

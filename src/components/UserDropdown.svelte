@@ -35,13 +35,18 @@
             </div>
             <Button href="/map" variant="ghost">
                 <DashboardIcon/>
-                <p class="text-sm">Map</p>
+                <p class="text-sm">Mapa</p>
+            </Button>
+
+            <Button href="/account" variant="ghost">
+                <DashboardIcon/>
+                <p class="text-sm">Editar su cuenta</p>
             </Button>
 
             <form action="/api/auth/signout">
                 <Button type="submit" variant="ghost">
                     <LogoutIcon/>
-                    <p class="text-sm">Sign out</p>
+                    <p class="text-sm">Cerrar sesión</p>
                 </Button>
             </form>
         </div>

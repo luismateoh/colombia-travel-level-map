@@ -3,18 +3,18 @@ import SigninForm from "@/components/SigninForm.svelte";
 import Layout from "@/layouts/Layout.astro";
 import getUserData from "../../firebase/utils/auth/getUserData";
 import Navbar from "../../components/Navbar.svelte";
-const title = "Sign In - Astro Starter Pack";
+const title = "Inicio de sesión";
 const description =
-  "Sign in to your account to access personalized settings and features.";
+    "Inicie sesión para visualizar los departamentos visitados";
 
 const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 if (user) {
-  return Astro.redirect("/map");
+    return Astro.redirect("/map");
 }
 ---
 
 <Layout title={title} description={description}>
-  <Navbar {user} client:load />
-  <SigninForm client:load />
+    <Navbar {user} client:load/>
+    <SigninForm client:load/>
 </Layout>

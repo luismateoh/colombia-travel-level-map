@@ -15,15 +15,15 @@
 
     async function handlePasswordChange() {
         if (newPassword !== confirmPassword) {
-            errorMessage = "Passwords do not match.";
+            errorMessage = "Las contraseñas no coinciden.";
             return;
         }
 
         try {
             await confirmPasswordReset(auth, oobCode, newPassword);
-            successMessage = "Your password has been reset successfully.";
+            successMessage = "Su contraseña se ha restablecido correctamente.";
         } catch (error) {
-            console.error("Error during password reset:", error);
+            console.error("Error al restablecer la contraseña:", error);
             errorMessage = getFriendlyErrorMessage(error);
         }
     }
@@ -37,10 +37,10 @@
     <div class="max-w-md w-full space-y-8 p-6 rounded-xl shadow-lg bg-white">
         <div>
             <h1 class="mt-6 text-center text-3xl font-extrabold text-black">
-                Reset Your Password
+                Restablecer contraseña
             </h1>
             <p class="mt-2 text-center text-sm text-black/80">
-                Enter and confirm your new password below.
+                Introduzca y confirme su nueva contraseña a continuación.
             </p>
         </div>
         {#if errorMessage}
@@ -59,7 +59,7 @@
         >
             <div class="rounded-md space-y-4">
                 <div>
-                    <label for="new-password" class="sr-only">New Password</label>
+                    <label for="new-password" class="sr-only">Nueva contraseña</label>
                     <Input
                             bind:value={newPassword}
                             type="password"
@@ -69,7 +69,7 @@
                     />
                 </div>
                 <div>
-                    <label for="confirm-password" class="sr-only">Confirm Password</label>
+                    <label for="confirm-password" class="sr-only">Confirmar contraseña</label>
                     <Input
                             bind:value={confirmPassword}
                             type="password"
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div>
-                <Button class="w-full" type="submit">Change Password</Button>
+                <Button class="w-full" type="submit">Cambiar contraseña</Button>
             </div>
         </form>
     </div>

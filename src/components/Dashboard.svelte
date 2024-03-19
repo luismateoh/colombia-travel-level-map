@@ -13,14 +13,10 @@
         <div class="flex flex-col items-center justify-center">
             <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
             <p class="text-xl mb-4">Welcome, {user.displayName}!</p>
-            <p>We are happy to see you here. Ready to dive in?</p>
+            <p>Nos alegramos de verle por aquí. ¿Listo para sumergirte?</p>
             <div class="mt-6">
-                <Button href="/account">Edit Your Account</Button>
+                <Button href="/account">Editar su cuenta</Button>
             </div>
         </div>
     </div>
-</div>
-
-<style>
-    /* Just in case you want to add some extra styles */
-</style>
+</div

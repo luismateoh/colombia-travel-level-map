@@ -8,5 +8,5 @@
 -->
 <Button {...$$restProps} disabled>
     <Spinner/>
-    Please wait
+    Espere, por favor...
 </Button>

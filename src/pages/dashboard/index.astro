@@ -10,14 +10,14 @@ const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 
 if (!user) {
-  return Astro.redirect("/signin");
+    return Astro.redirect("/signin");
 }
 
-const title = "Dashboard - Astro Starter Pack";
-const description = "Dashboard page to view and manage firebase data";
+const title = "Dashboard";
+const description = "Dashboard";
 ---
 
 <Layout {description} {title}>
-  <Navbar {user} client:load />
-  <Dashboard {user} client:load />
+    <Navbar {user} client:load/>
+    <Dashboard {user} client:load/>
 </Layout>

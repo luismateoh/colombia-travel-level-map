@@ -22,12 +22,12 @@
                 <Button
                         href="/map"
                         variant="outlined"
-                        class="w-full transform hover:-translate-y-1">Go to Dashboard
+                        class="w-full transform hover:-translate-y-1">Ir al panel de control
                 </Button
                 >
                 <form class="w-full" action="/api/auth/signout">
                     <Button type="submit" class="w-full transform hover:-translate-y-1"
-                    >Sign out
+                    >Cerrar sesión
                     </Button
                     >
                 </form>
@@ -42,10 +42,10 @@
                         variant="outlined"
                         class="w-full transform hover:-translate-y-1"
                 >
-                    Sign in
+                    Iniciar sesión
                 </Button>
                 <Button href="/signup" class="w-full transform hover:-translate-y-1">
-                    Sign up
+                    Registrarse
                 </Button>
             </div>
         </div>
