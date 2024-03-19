@@ -19,7 +19,7 @@
             {#if user?.photoURL}
                 <img alt="User Icon" width="40" height="40" src={user?.photoURL}/>
             {:else}
-                <img alt="User Icon" width="15" height="15" src="/astro.svg"/>
+                <img  class="max-w-[150%]" alt="User Icon" width="100" height="100" src="/flag.svg"/>
             {/if}
         </button>
         <div slot="content">

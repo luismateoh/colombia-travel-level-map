@@ -1,7 +1,7 @@
 <svg
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns="http://www.w3.org/2000/svg"
-  class="h-4 w-4"
+  class="h-5 w-5"
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"

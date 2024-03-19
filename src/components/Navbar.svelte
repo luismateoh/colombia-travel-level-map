@@ -27,15 +27,15 @@
     <div
             class="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full"
     >
-        <a href="/" class="flex items-center font-display text-2xl">
+        <a href="/" class="flex items-center font-display text-xl">
             <img
-                    src="/astro.svg"
-                    alt="Astro logo"
-                    width="30"
-                    height="30"
+                    src="/flag.svg"
+                    alt="Colombian flag logo"
+                    width="40"
+                    height="40"
                     class="mr-2 rounded-sm"
             />
-            <p class="ml-5 font-bold">Colombia Map</p>
+            <p class="font-bold">Mapa de Colombia</p>
         </a>
 
         <div class="flex gap-6">

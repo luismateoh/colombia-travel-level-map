@@ -1,5 +1,5 @@
 <script>
-    import {PROVINCE_LEVEL_FILLS, PROVINCES} from '../components/utils/constants.svelte';
+    import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
     import {getContext, onMount} from "svelte";
 
 
@@ -10,8 +10,6 @@
 
     onMount(() => {
         provinceLevels.subscribe(levels => {
-            console.log(levels); // Print the current state of the provinceLevels store
-
             // Update the map with the new levels
             levels.forEach((level, index) => {
                 const provinceElement = document.getElementById(PROVINCES[index].id);
@@ -138,7 +136,7 @@
                     on:focus={handleProvinceClick}
                     on:blur={handleProvinceClick}
                     on:keydown={(event) => { if (event.key === 'Enter') handleProvinceClick(event); }}
-                    tabindex="0"
+                    tabindex="-1"
                     role="button"
             >
 

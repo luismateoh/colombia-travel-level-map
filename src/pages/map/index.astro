@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Map from "../../components/Map.svelte";
-import Test from "../../components/Test.svelte";
+import Map from "../../components/map/Map.svelte";
 import Navbar from "../../components/Navbar.svelte";
 import getUserData from "../../firebase/utils/auth/getUserData";
 
@@ -23,5 +22,4 @@ const description = "Dashboard page to view and manage firebase data";
     <div class="w-full flex justify-center my-16">
         <Map class="w-full flex justify-center" client:load/>
     </div>
-    <Test/>
 </Layout>
