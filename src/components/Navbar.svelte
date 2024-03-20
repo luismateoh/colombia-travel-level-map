@@ -9,7 +9,7 @@
 
     onMount(() => {
         const handleScroll = () => {
-            scrolled = window.pageYOffset > 0;
+            scrolled = window.scrollY > 0;
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -27,13 +27,13 @@
     <div
             class="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full"
     >
-        <a href="/" class="flex items-center font-display text-xl">
+        <a class="flex items-center font-display text-xl" href="/">
             <img
-                    src="/flag.svg"
                     alt="Colombian flag logo"
-                    width="40"
-                    height="40"
                     class="mr-2 rounded-sm"
+                    height="40"
+                    src="/flag.svg"
+                    width="40"
             />
             <p class="font-bold">Mapa de Colombia</p>
         </a>

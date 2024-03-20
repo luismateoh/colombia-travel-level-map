@@ -1,19 +1,8 @@
-<a href="https://astro-firebase-svelte-starter.vercel.app/">
-<img alt="Screenshot of the Astro Firebase Svelte Tailwind starter's Banner showing a clean and responsive design sign in and a perfect google lighthouse scores with 100% in Performance, Accessibility, Best Practices, and SEO" src="./.github/assets/firebase-starter-banner.png">
-</a>
-<h1 align="center">Astro Firebase Starter</h1>
+## Colombian Map
 
-<p align="center">
- A starter pack for getting started with Tailwind, Astro, Firebase, and Svelte.
-</p>
+Colombian map where you can fill with th departments that you have.
 
-<p align="center">
-  <a href="https://astro-firebase-svelte-starter.vercel.app/"><strong>Try me!</strong></a>
-</p>
-
-## Getting Started
-
-To use this starter pack, follow these steps:
+![app.png](img_1.png)
 
 1. **Clone the repository:**
 
@@ -41,7 +30,8 @@ To use this starter pack, follow these steps:
 
 # Quickstart
 
-Follow this guide to quickly set up Firebase for your project. For more in-depth instructions, see [FIREBASE_SETUP.md](./docs/FIREBASE_SETUP.md).
+Follow this guide to quickly set up Firebase for your project. For more in-depth instructions,
+see [FIREBASE_SETUP.md](./docs/FIREBASE_SETUP.md).
 
 ## Obtain Firebase Keys
 
@@ -53,7 +43,8 @@ Follow this guide to quickly set up Firebase for your project. For more in-depth
 
 ### Web App Configuration
 
-1. If you haven't added a web app to [Firebase](https://console.firebase.google.com/), click the web icon (`</>`) in `Project settings` > `Your apps` to create one.
+1. If you haven't added a web app to [Firebase](https://console.firebase.google.com/), click the web icon (`</>`)
+   in `Project settings` > `Your apps` to create one.
 2. Find your web app and you should see your `configuration`
 3. Copy the configuration object.
 
@@ -77,7 +68,8 @@ Run
 
 A .env file with all Firebase variables will be generated. So you don't have to copy and paste one by one each key.
 
-**Note:** After setting up the .env file, remember to remove the service-account.json from your project's root directory to protect your credentials.
+**Note:** After setting up the .env file, remember to remove the service-account.json from your project's root directory
+to protect your credentials.
 
 ## Enable Authentication
 
