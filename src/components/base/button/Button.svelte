@@ -23,7 +23,9 @@
         rounded:
             "rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white hover:bg-black/80 transition duration-200 ease-in-out ",
         inRow:
-            "flex block px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full",
+            "flex block px-2 py-1 hover:bg-gray-200 w-full",
+        xMark:
+            "flex block hover:bg-gray-200 w-full",
         default:
             "flex justify-center items-center disabled:opacity-30 disabled:pointer-events-none py-2 px-4 rounded-md text-white bg-black hover:bg-black/80 focus:outline-none focus:ring-2 transition duration-200 ease-in-out",
     };
@@ -61,7 +63,9 @@
             class="{buttonVariants[variant]} {className}"
     >
         {#if icon}
-            <svelte:component this={icon}/>
+            <div>
+                <svelte:component color="#374151" this={icon}/>
+            </div>
         {/if}
         <slot/>
     </button>

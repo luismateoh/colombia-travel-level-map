@@ -4,13 +4,13 @@
 
 
     let color = '#ffffff';
-    // Get the store from the context
+
     const provinceLevels = getContext('provinceLevels');
 
 
     onMount(() => {
         provinceLevels.subscribe(levels => {
-            // Update the map with the new levels
+
             levels.forEach((level, index) => {
                 const provinceElement = document.getElementById(PROVINCES[index].id);
                 if (provinceElement) {
@@ -23,7 +23,7 @@
     export let selectedProvinceIndex;
     export let menuPosition;
     export let menuVisible;
-    export const totalLevel = 0;
+    export const totalLevel = 5;
 
     let tooltipVisible = false;
     let tooltipPosition = {x: 0, y: 0};
@@ -40,8 +40,8 @@
                 : event.target.getBoundingClientRect().x + 200 - window.innerWidth;
         selectedProvinceIndex = event.target.getAttribute('index');
         menuPosition = {
-            x: event.target.getBoundingClientRect().x + window.pageXOffset - offsetX,
-            y: event.target.getBoundingClientRect().y + window.pageYOffset - offsetY,
+            x: event.target.getBoundingClientRect().x + window.scrollX - offsetX,
+            y: event.target.getBoundingClientRect().y + window.scrollY - offsetY,
         };
         menuVisible = true;
     };
@@ -50,11 +50,11 @@
         const targetElement = event.currentTarget;
         const provIndex = targetElement.getAttribute('index');
         const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-        targetElement.style.fill = darkenColor(currentColor, 20); // Oscurece el color actual
+        targetElement.style.fill = darkenColor(currentColor, 20);
         const position = targetElement.getBoundingClientRect();
         tooltipPosition = {
-            x: position.x + window.pageXOffset,
-            y: position.y + window.pageYOffset,
+            x: position.x + window.scrollX,
+            y: position.y + window.scrollY,
         }
         tooltipContent = targetElement.getAttribute('id').replace(/_/g, ' ');
         tooltipVisible = true;
@@ -125,7 +125,7 @@
                     stroke-linecap="butt"
                     stroke-linejoin="miter"
                     stroke-miterlimit="4"
-                    stroke-width="2"
+                    stroke-width="1.5"
                     stroke-opacity="1"
                     d={province.drawPath}
                     opacity="2"

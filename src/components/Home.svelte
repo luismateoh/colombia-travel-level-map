@@ -51,4 +51,3 @@
         </div>
     {/if}
 </div>
-<div class="h-[1000px]"/>
