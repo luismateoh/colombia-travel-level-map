@@ -75,18 +75,27 @@
 </script>
 
 {#if isOpen}
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" on:click={handleCancel}>
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 relative" on:click|stopPropagation>
-            <!-- Close button -->
+    <div 
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        tabindex="-1"
+    >
+        <div 
+            class="bg-white rounded-lg p-6 max-w-md w-full mx-4 relative" 
+            role="document"
+        >
             <button
                 class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
                 on:click={handleCancel}
+                aria-label="Cerrar modal"
             >
                 <Cross color="currentColor" />
             </button>
 
             <!-- Title -->
-            <h2 class="text-xl font-bold text-red-600 mb-4">{$t('resetMapTitle')}</h2>
+            <h2 id="modal-title" class="text-xl font-bold text-red-600 mb-4">{$t('resetMapTitle')}</h2>
             
             <!-- Warning -->
             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
