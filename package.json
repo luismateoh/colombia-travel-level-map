@@ -2,6 +2,9 @@
   "name": "astro-firebase-svelte-tailwind-starter",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev --host",
     "start": "astro dev",
