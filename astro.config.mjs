@@ -14,5 +14,7 @@ export default defineConfig({
   preview: {
     port: 3000
   },
-  adapter: vercel()
+  adapter: vercel({
+    runtime: 'nodejs20.x'
+  })
 });
