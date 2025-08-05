@@ -49,33 +49,80 @@
     };
 
     const handleMouseEnter = (event) => {
-        const targetElement = event.currentTarget;
-        const provIndex = targetElement.getAttribute('index');
-        const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-        targetElement.style.fill = darkenColor(currentColor, 20);
-        const position = targetElement.getBoundingClientRect();
-        tooltipPosition = {
-            x: position.x + window.scrollX,
-            y: position.y + window.scrollY,
+        try {
+            const targetElement = event.currentTarget;
+            const provIndex = targetElement.getAttribute('index');
+            const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
+            
+            // Validar que el color sea una string válida antes de usar darkenColor
+            if (typeof currentColor === 'string' && currentColor.startsWith('#')) {
+                targetElement.style.fill = darkenColor(currentColor, 20);
+            } else {
+                // Fallback a color por defecto si el color no es válido
+                targetElement.style.fill = darkenColor('#ffffff', 20);
+            }
+            
+            const position = targetElement.getBoundingClientRect();
+            tooltipPosition = {
+                x: position.x + window.scrollX,
+                y: position.y + window.scrollY,
+            }
+            tooltipContent = targetElement.getAttribute('id').replace(/_/g, ' ');
+            tooltipVisible = true;
+        } catch (error) {
+            console.error('Error in handleMouseEnter:', error);
+            // Fallback silencioso - no cambiar el color si hay error
         }
-        tooltipContent = targetElement.getAttribute('id').replace(/_/g, ' ');
-        tooltipVisible = true;
     };
 
     const handleMouseLeave = (event) => {
-        const targetElement = event.currentTarget;
-        const provIndex = targetElement.getAttribute('index');
-        targetElement.style.fill = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-        tooltipVisible = false;
+        try {
+            const targetElement = event.currentTarget;
+            const provIndex = targetElement.getAttribute('index');
+            const originalColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
+            
+            // Validar el color antes de aplicarlo
+            if (typeof originalColor === 'string') {
+                targetElement.style.fill = originalColor;
+            } else {
+                targetElement.style.fill = color;
+            }
+            tooltipVisible = false;
+        } catch (error) {
+            console.error('Error in handleMouseLeave:', error);
+            // Fallback silencioso
+            tooltipVisible = false;
+        }
     };
 
-    function darkenColor(color, percent) {
-        const num = parseInt(color.replace("#", ""), 16),
-            amt = Math.round(2.55 * percent),
-            R = (num >> 16) - amt,
-            B = (num >> 8 & 0x00FF) - amt,
-            G = (num & 0x0000FF) - amt;
-        return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+    function darkenColor(colorValue, percent) {
+        try {
+            // Validar entrada
+            if (!colorValue || typeof colorValue !== 'string') {
+                console.warn('Invalid color value:', colorValue);
+                return '#ffffff'; // Color por defecto
+            }
+            
+            // Asegurar que el color comience con #
+            const cleanColor = colorValue.startsWith('#') ? colorValue : '#' + colorValue;
+            
+            // Validar formato hexadecimal
+            if (!/^#[0-9A-F]{6}$/i.test(cleanColor)) {
+                console.warn('Invalid hex color format:', cleanColor);
+                return '#ffffff'; // Color por defecto
+            }
+            
+            const num = parseInt(cleanColor.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = Math.max(0, Math.min(255, (num >> 16) - amt));
+            const B = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) - amt));
+            const G = Math.max(0, Math.min(255, (num & 0x0000FF) - amt));
+            
+            return "#" + (0x1000000 + R * 0x10000 + B * 0x100 + G).toString(16).slice(1);
+        } catch (error) {
+            console.error('Error in darkenColor:', error);
+            return '#ffffff'; // Color por defecto en caso de error
+        }
     }
 
     const handleOutsideClick = () => {

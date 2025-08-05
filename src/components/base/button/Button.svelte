@@ -23,9 +23,9 @@
         rounded:
             "rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white hover:bg-black/80 transition duration-200 ease-in-out ",
         inRow:
-            "flex block px-2 py-1 hover:bg-gray-200 w-full",
+            "flex items-center justify-start gap-2 px-2 py-1 hover:bg-gray-200 w-full text-left",
         xMark:
-            "flex block hover:bg-gray-200 w-full",
+            "flex items-center justify-center hover:bg-gray-200 w-full",
         default:
             "flex justify-center items-center disabled:opacity-30 disabled:pointer-events-none py-2 px-4 rounded-md text-white bg-black hover:bg-black/80 focus:outline-none focus:ring-2 transition duration-200 ease-in-out",
     };

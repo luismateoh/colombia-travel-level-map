@@ -1,22 +1,101 @@
 ---
 import "@/css/global.css";
-// Define your Props interface with both `title` and `description`
+
+// Enhanced Props interface for better SEO
 interface Props {
   title: string;
   description: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonical?: string;
+  noindex?: boolean;
+  structuredData?: any;
 }
 
-// Extract props from Astro.props
-const { title, description } = Astro.props as Props;
+// Extract props from Astro.props with defaults
+const { 
+  title, 
+  description, 
+  keywords = "Colombia, travel, map, departments, interactive map, tourism, travel tracker",
+  ogImage = "/colombia-map-icon.svg",
+  ogType = "website",
+  canonical = Astro.url.href,
+  noindex = false,
+  structuredData
+} = Astro.props as Props;
+
+// Generate structured data for better SEO
+const defaultStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Colombia Travel Level Map",
+  "description": "Interactive map of Colombia to track your travel experiences by department",
+  "url": Astro.site?.href || "https://colombia-travel-map.vercel.app",
+  "applicationCategory": "Travel",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Person",
+    "name": "Luis Hincapie"
+  }
+};
+
+const finalStructuredData = structuredData || defaultStructuredData;
 ---
 
 <html lang="en" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.url).href} />
+    <meta property="og:site_name" content="Colombia Travel Level Map" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_CO" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, Astro.url).href} />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://firebase.googleapis.com" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(finalStructuredData)} />
+    
+    <!-- Prefetch critical resources -->
+    <link rel="prefetch" href="/colombia-map-icon.svg" />
   </head>
   <body>
     <main>

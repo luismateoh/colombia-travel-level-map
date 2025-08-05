@@ -4,15 +4,53 @@ import Map from "../components/map/Map.svelte";
 import Navbar from "../components/Navbar.svelte";
 import getUserData from "@/firebase/utils/auth/getUserData";
 
-// Las traducciones se manejarán del lado del cliente
-// Estos son valores por defecto para SEO
-const title = "Mapa de Colombia | Colombia Travel Level Map";
-const description = "Mapa interactivo de Colombia para visualizar los departamentos visitados. Interactive map of Colombia to visualize visited departments.";
+// Enhanced SEO metadata
+const title = "Colombia Travel Level Map | Interactive Department Tracker";
+const description = "Track your travel experiences across Colombia's 32 departments and Bogotá D.C. with our interactive map. Mark places you've visited, lived, or plan to explore.";
+const keywords = "Colombia travel map, Colombian departments, travel tracker, interactive map, tourism Colombia, department tracker, travel planning Colombia";
+
+// Structured data for the homepage
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Colombia Travel Level Map",
+  "description": description,
+  "url": Astro.site?.href || "https://colombia-travel-map.vercel.app",
+  "applicationCategory": "Travel",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "softwareVersion": "1.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Interactive map of Colombia",
+    "Track visited departments",
+    "Mark travel levels",
+    "Google authentication",
+    "Data synchronization"
+  ],
+  "about": {
+    "@type": "Place",
+    "@id": "https://www.wikidata.org/wiki/Q739",
+    "name": "Colombia",
+    "description": "Country in South America"
+  }
+};
+
 const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 ---
 
-<Layout title={title} description={description}>
+<Layout 
+  title={title} 
+  description={description} 
+  keywords={keywords}
+  ogType="website"
+  structuredData={structuredData}
+>
     <Navbar {user} client:load/>
     <div class="w-full flex justify-center my-16">
         <div class="w-full flex justify-center">
