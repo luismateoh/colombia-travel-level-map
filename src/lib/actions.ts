@@ -4,7 +4,7 @@
  * @param {Array<any>} params - An array containing the enabled state, the handler function, and the keys to listen for.
  * @returns The action object with a destroy method.
  */
-export function keyDown(node: Node, params: [boolean, (e: KeyboardEvent) => void, string[]]) {
+export function keyDown(node: HTMLElement, params: [boolean, (e: KeyboardEvent) => void, string[]]) {
   const [enabled, handler, keys] = params;
   const onKeyDown = (event: KeyboardEvent) => {
     if (enabled && keys.includes(event.key)) {
@@ -65,11 +65,11 @@ export function focusTrap(node: HTMLElement) {
 
 /**
  * Action to dispatch an event when a click occurs outside of a node.
- * @param {Node} node - The node to which the action is applied.
+ * @param {HTMLElement} node - The node to which the action is applied.
  * @param {Array<any>} params - An array containing the handler function and an element to ignore.
  * @returns The action object with a destroy method.
  */
-export function clickOutside(node: Node, params: [() => void, HTMLElement]) {
+export function clickOutside(node: HTMLElement, params: [() => void, HTMLElement]) {
   const [handler, ignore] = params;
 
   function onClick(event: MouseEvent) {
