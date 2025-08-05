@@ -1,5 +1,3 @@
-import { writable } from 'svelte/store';
-
 /**
  * Convierte el SVG del mapa a imagen PNG con información del usuario
  * @param {string} userName - Nombre del usuario
@@ -8,37 +6,37 @@ import { writable } from 'svelte/store';
  * @param {number} totalProvinces - Total de departamentos
  * @returns {Promise<void>}
  */
-export async function downloadMapImage(userName, totalScore, visitedCount, totalProvinces) {
+export async function downloadMapImage(userName: string, totalScore: number, visitedCount: number, totalProvinces: number): Promise<void> {
   try {
     // Obtener el SVG del mapa
-    const mapSvg = document.querySelector('#svg574'); // ID del SVG principal
+    const mapSvg = document.querySelector('#svg574') as SVGSVGElement;
     if (!mapSvg) {
       throw new Error('No se encontró el mapa');
     }
 
     // Clonar el SVG para no afectar el original
-    const clonedSvg = mapSvg.cloneNode(true);
+    const clonedSvg = mapSvg.cloneNode(true) as SVGSVGElement;
     
     // Asegurar que todos los paths tengan contorno negro
-    const paths = clonedSvg.querySelectorAll('path[id]:not([id="rect11351"])'); // Excluir el fondo
-    paths.forEach(path => {
-      path.setAttribute('stroke', '#000000');
-      path.setAttribute('stroke-width', '1.5');
-      path.setAttribute('stroke-opacity', '1');
+    const paths = clonedSvg.querySelectorAll('path[id]:not([id="rect11351"])');
+    paths.forEach((path: Element) => {
+      (path as SVGPathElement).setAttribute('stroke', '#000000');
+      (path as SVGPathElement).setAttribute('stroke-width', '1.5');
+      (path as SVGPathElement).setAttribute('stroke-opacity', '1');
     });
     
     // Configurar dimensiones ampliadas para el SVG (más espacio arriba y a la derecha)
     const originalWidth = 840;
     const originalHeight = 1155;
-    const infoHeight = 160; // Espacio adicional para la información del usuario
-    const legendWidth = 200; // Espacio adicional para la leyenda de colores
+    const infoHeight = 160;
+    const legendWidth = 200;
     const padding = 20;
     
-    const newWidth = originalWidth + legendWidth + (padding * 3); // padding extra para la leyenda
+    const newWidth = originalWidth + legendWidth + (padding * 3);
     const newHeight = originalHeight + infoHeight + (padding * 2);
     
-    clonedSvg.setAttribute('width', newWidth);
-    clonedSvg.setAttribute('height', newHeight);
+    clonedSvg.setAttribute('width', newWidth.toString());
+    clonedSvg.setAttribute('height', newHeight.toString());
     clonedSvg.setAttribute('viewBox', `0 0 ${newWidth} ${newHeight}`);
     
     // Mover todo el contenido del mapa hacia abajo y a la izquierda para dar espacio a la leyenda
@@ -55,8 +53,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
     const backgroundRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     backgroundRect.setAttribute('x', '0');
     backgroundRect.setAttribute('y', '0');
-    backgroundRect.setAttribute('width', newWidth);
-    backgroundRect.setAttribute('height', newHeight);
+    backgroundRect.setAttribute('width', newWidth.toString());
+    backgroundRect.setAttribute('height', newHeight.toString());
     backgroundRect.setAttribute('fill', '#ffffff');
     clonedSvg.insertBefore(backgroundRect, clonedSvg.firstChild);
     
@@ -66,10 +64,10 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
     
     // Fondo para la información
     const infoBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    infoBg.setAttribute('x', padding);
-    infoBg.setAttribute('y', padding);
-    infoBg.setAttribute('width', newWidth - (padding * 2));
-    infoBg.setAttribute('height', infoHeight - padding);
+    infoBg.setAttribute('x', padding.toString());
+    infoBg.setAttribute('y', padding.toString());
+    infoBg.setAttribute('width', (newWidth - (padding * 2)).toString());
+    infoBg.setAttribute('height', (infoHeight - padding).toString());
     infoBg.setAttribute('fill', 'rgba(249, 250, 251, 0.95)');
     infoBg.setAttribute('stroke', '#e5e7eb');
     infoBg.setAttribute('stroke-width', '2');
@@ -78,8 +76,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Título principal
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    title.setAttribute('x', padding + 20);
-    title.setAttribute('y', padding + 35);
+    title.setAttribute('x', (padding + 20).toString());
+    title.setAttribute('y', (padding + 35).toString());
     title.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     title.setAttribute('font-size', '20');
     title.setAttribute('font-weight', 'bold');
@@ -89,8 +87,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Nombre del usuario
     const userText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    userText.setAttribute('x', padding + 20);
-    userText.setAttribute('y', padding + 60);
+    userText.setAttribute('x', (padding + 20).toString());
+    userText.setAttribute('y', (padding + 60).toString());
     userText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     userText.setAttribute('font-size', '16');
     userText.setAttribute('font-weight', '600');
@@ -100,8 +98,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Puntaje total
     const scoreText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    scoreText.setAttribute('x', padding + 20);
-    scoreText.setAttribute('y', padding + 85);
+    scoreText.setAttribute('x', (padding + 20).toString());
+    scoreText.setAttribute('y', (padding + 85).toString());
     scoreText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     scoreText.setAttribute('font-size', '14');
     scoreText.setAttribute('fill', '#4b5563');
@@ -110,8 +108,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Progreso
     const progressText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    progressText.setAttribute('x', padding + 20);
-    progressText.setAttribute('y', padding + 105);
+    progressText.setAttribute('x', (padding + 20).toString());
+    progressText.setAttribute('y', (padding + 105).toString());
     progressText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     progressText.setAttribute('font-size', '14');
     progressText.setAttribute('fill', '#4b5563');
@@ -120,8 +118,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Fecha y URL
     const dateText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    dateText.setAttribute('x', padding + 20);
-    dateText.setAttribute('y', padding + 125);
+    dateText.setAttribute('x', (padding + 20).toString());
+    dateText.setAttribute('y', (padding + 125).toString());
     dateText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     dateText.setAttribute('font-size', '12');
     dateText.setAttribute('fill', '#9ca3af');
@@ -141,9 +139,9 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
     
     // Fondo para la leyenda
     const legendBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    legendBg.setAttribute('x', legendX);
-    legendBg.setAttribute('y', legendY);
-    legendBg.setAttribute('width', legendWidth - padding);
+    legendBg.setAttribute('x', legendX.toString());
+    legendBg.setAttribute('y', legendY.toString());
+    legendBg.setAttribute('width', (legendWidth - padding).toString());
     legendBg.setAttribute('height', '320');
     legendBg.setAttribute('fill', 'rgba(249, 250, 251, 0.95)');
     legendBg.setAttribute('stroke', '#e5e7eb');
@@ -153,8 +151,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Título de la leyenda
     const legendTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    legendTitle.setAttribute('x', legendX + 15);
-    legendTitle.setAttribute('y', legendY + 25);
+    legendTitle.setAttribute('x', (legendX + 15).toString());
+    legendTitle.setAttribute('y', (legendY + 25).toString());
     legendTitle.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     legendTitle.setAttribute('font-size', '14');
     legendTitle.setAttribute('font-weight', 'bold');
@@ -178,8 +176,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
       
       // Cuadrado de color
       const colorRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      colorRect.setAttribute('x', legendX + 15);
-      colorRect.setAttribute('y', itemY);
+      colorRect.setAttribute('x', (legendX + 15).toString());
+      colorRect.setAttribute('y', itemY.toString());
       colorRect.setAttribute('width', '20');
       colorRect.setAttribute('height', '20');
       colorRect.setAttribute('fill', level.color);
@@ -190,8 +188,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
       
       // Símbolo dentro del cuadrado
       const symbolText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      symbolText.setAttribute('x', legendX + 25);
-      symbolText.setAttribute('y', itemY + 14);
+      symbolText.setAttribute('x', (legendX + 25).toString());
+      symbolText.setAttribute('y', (itemY + 14).toString());
       symbolText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
       symbolText.setAttribute('font-size', '10');
       symbolText.setAttribute('text-anchor', 'middle');
@@ -201,8 +199,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
       
       // Etiqueta del nivel
       const labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      labelText.setAttribute('x', legendX + 45);
-      labelText.setAttribute('y', itemY + 14);
+      labelText.setAttribute('x', (legendX + 45).toString());
+      labelText.setAttribute('y', (itemY + 14).toString());
       labelText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
       labelText.setAttribute('font-size', '12');
       labelText.setAttribute('fill', '#374151');
@@ -212,8 +210,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
 
     // Agregar nota al final de la leyenda
     const noteText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    noteText.setAttribute('x', legendX + 15);
-    noteText.setAttribute('y', legendY + 300);
+    noteText.setAttribute('x', (legendX + 15).toString());
+    noteText.setAttribute('y', (legendY + 300).toString());
     noteText.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     noteText.setAttribute('font-size', '10');
     noteText.setAttribute('fill', '#9ca3af');
@@ -221,8 +219,8 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
     legendGroup.appendChild(noteText);
     
     const noteText2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    noteText2.setAttribute('x', legendX + 15);
-    noteText2.setAttribute('y', legendY + 315);
+    noteText2.setAttribute('x', (legendX + 15).toString());
+    noteText2.setAttribute('y', (legendY + 315).toString());
     noteText2.setAttribute('font-family', 'system-ui, -apple-system, sans-serif');
     noteText2.setAttribute('font-size', '10');
     noteText2.setAttribute('fill', '#9ca3af');
@@ -238,6 +236,10 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
     // Crear canvas para renderizar
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      throw new Error('No se pudo obtener el contexto del canvas');
+    }
     
     // Configurar tamaño del canvas (alta resolución para mejor calidad)
     const scale = 2;
@@ -261,6 +263,11 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
         
         // Convertir canvas a blob y descargar
         canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Error al generar la imagen'));
+            return;
+          }
+          
           const downloadUrl = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = downloadUrl;
@@ -297,7 +304,12 @@ export async function downloadMapImage(userName, totalScore, visitedCount, total
  * @param {Array} provinceLevels - Datos de los niveles
  * @param {Object} stats - Estadísticas del usuario
  */
-export function downloadMapData(userName, provinceLevels, stats) {
+export function downloadMapData(userName: string, provinceLevels: number[], stats: {
+  totalScore: number;
+  visitedCount: number;
+  totalProvinces: number;
+  completionPercentage: number;
+}) {
   const data = {
     usuario: userName || 'Usuario',
     fecha: new Date().toISOString(),

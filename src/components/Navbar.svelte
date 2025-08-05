@@ -3,8 +3,9 @@
     import UserDropdown from "@/components/UserDropdown.svelte";
     import {Button} from "@/components/base/button";
     import type {User} from "firebase/auth";
+    import type {UserRecord} from "firebase-admin/auth";
 
-    export let user: User;
+    export let user: User | UserRecord | null = null;
     let scrolled = false;
 
     onMount(() => {

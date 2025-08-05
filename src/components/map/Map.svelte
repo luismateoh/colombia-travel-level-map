@@ -10,6 +10,10 @@
     import { currentUser, isLoading } from '@/firebase/utils/authStore';
     import Download from "@/components/icons/Download.svelte";
 
+    // Props
+    let className = '';
+    export { className as class };
+
     // Create a writable store for the array of levels
     const provinceLevels = writable(new Array(PROVINCES.length).fill(0));
 
@@ -210,7 +214,7 @@
     };
 </script>
 
-<section class="mx-5 w-full max-w-screen-xl items-center justify-between">
+<section class="mx-5 w-full max-w-screen-xl items-center justify-between {className}">
     <div class="flex flex-row flex-wrap my-3">
         <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0">
             <div class="flex flex-col sticky top-20 gap-2">

@@ -10,7 +10,7 @@ export async function testFirestoreConnection() {
   try {
     // Intenta leer un documento de prueba
     const testRef = doc(db, "test", "connection");
-    const testSnap = await getDoc(testRef);
+    await getDoc(testRef);
     console.log("✅ Conexión a Firestore exitosa");
     return true;
   } catch (error) {
@@ -40,10 +40,14 @@ export async function saveUserMapData(userId: string, provinceLevels: number[]):
     
     console.log("✅ Datos del mapa guardados exitosamente");
     return true;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("❌ Error guardando datos del mapa:", error);
-    console.error("❌ Código de error:", error.code);
-    console.error("❌ Mensaje:", error.message);
+    if (error instanceof Error) {
+      console.error("❌ Mensaje:", error.message);
+    }
+    if (typeof error === 'object' && error !== null && 'code' in error) {
+      console.error("❌ Código de error:", (error as any).code);
+    }
     return false;
   }
 }
