@@ -1,7 +1,7 @@
 <script>
     import ColombiaMap from './ColombianMap.svelte';
     import {PROVINCES, MENU_OPTIONS, PROVINCE_LEVEL_FILLS} from '@/components/utils/constants.svelte';
-    import {onMount, setContext} from 'svelte';
+    import {onMount} from 'svelte';
     import {writable} from "svelte/store";
     import {Button} from "@/components/base/button";
     import Cross from "@/components/icons/Cross.svelte";
@@ -12,13 +12,9 @@
 
     // Props
     let className = '';
-    export { className as class };
 
     // Create a writable store for the array of levels
     const provinceLevels = writable(new Array(PROVINCES.length).fill(0));
-
-    // Set the store in the context
-    setContext('provinceLevels', provinceLevels);
 
     let selectedProvinceIndex = 0;
     let menuPosition = {x: 0, y: 0};
@@ -144,41 +140,6 @@
         });
         
         menuVisible = false;
-
-        // Forzar actualización inmediata mostrando el NÚMERO en lugar del color
-        setTimeout(() => {
-            const provinceElement = document.getElementById(selectedProvinceName);
-            if (provinceElement) {
-                const levelNumber = PROVINCE_LEVEL_FILLS[parseInt(newLevel)];
-                
-                // Mostrar el número como texto en el departamento
-                provinceElement.style.fill = '#cccccc'; // Color gris neutro
-                
-                // Crear o actualizar el texto que muestra el número
-                let textElement = document.getElementById(`text-${selectedProvinceName}`);
-                if (!textElement) {
-                    textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    textElement.setAttribute('id', `text-${selectedProvinceName}`);
-                    textElement.style.fontSize = '12px';
-                    textElement.style.fontWeight = 'bold';
-                    textElement.style.fill = '#000000';
-                    textElement.style.textAnchor = 'middle';
-                    textElement.style.pointerEvents = 'none';
-                    
-                    // Obtener el centro del path para posicionar el texto
-                    const bbox = provinceElement.getBBox();
-                    textElement.setAttribute('x', bbox.x + bbox.width / 2);
-                    textElement.setAttribute('y', bbox.y + bbox.height / 2 + 4);
-                    
-                    provinceElement.parentNode.appendChild(textElement);
-                }
-                
-                textElement.textContent = levelNumber;
-                
-                console.log(`🔢 Mostrando NÚMERO ${levelNumber} en ${selectedProvinceName}`);
-                console.log(`📍 Array completo actual:`, $provinceLevels);
-            }
-        }, 10);
 
         // Guardar inmediatamente si hay usuario
         if ($currentUser && hasLoadedInitialData) {
@@ -413,7 +374,7 @@
                         bind:selectedProvinceIndex={selectedProvinceIndex}
                         bind:menuPosition={menuPosition}
                         bind:menuVisible={menuVisible}
-                        totalLevel={totalLevel}
+                        provinceLevels={provinceLevels}
                     />
                 {/if}
             </div>

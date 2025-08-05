@@ -1,65 +1,28 @@
 <script>
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
-    import {getContext, onMount} from "svelte";
+    import {onMount} from "svelte";
 
     let color = '#ffffff';
     
-    const provinceLevels = getContext('provinceLevels');
+    export let provinceLevels;
+    export let selectedProvinceIndex;
+    export let menuPosition;
+    export let menuVisible;
 
     // Variables reactivas para manejar colores y hover states
-    let currentColors = [];
+    $: currentColors = $provinceLevels.map(level => PROVINCE_LEVEL_FILLS[level] || PROVINCE_LEVEL_FILLS[0]);
     let hoverStates = [];
 
     // Initialize arrays
     onMount(() => {
-        currentColors = new Array(PROVINCES.length).fill(color);
         hoverStates = new Array(PROVINCES.length).fill(false);
-        
-        // Trigger initial color update if provinceLevels already has data
-        if ($provinceLevels && $provinceLevels.length > 0) {
-            updateColors();
-        }
     });
-
-    // Function to update colors - RESTAURADO A COLORES ORIGINALES
-    const updateColors = () => {
-        if ($provinceLevels && $provinceLevels.length > 0) {
-            console.log('🎨 Actualizando colores del mapa:', $provinceLevels);
-            const newColors = $provinceLevels.map((level) => {
-                const colorValue = PROVINCE_LEVEL_FILLS[level] || PROVINCE_LEVEL_FILLS[0];
-                console.log(`🎨 Nivel ${level} -> Color ${colorValue}`);
-                return colorValue;
-            });
-            currentColors = newColors;
-            console.log('🎨 Colores aplicados:', newColors);
-            
-            // Limpiar cualquier texto que pueda haber quedado
-            setTimeout(() => {
-                PROVINCES.forEach((province) => {
-                    const existingText = document.getElementById(`text-${province.id}`);
-                    if (existingText) {
-                        existingText.remove();
-                    }
-                });
-            }, 100);
-        }
-    };
-
-    // Reactive statement para actualizar colores cuando cambien los niveles
-    $: if ($provinceLevels) {
-        updateColors();
-    }
 
     // Función para obtener el color final de una provincia (considerando hover)
     const getFinalColor = (provIndex) => {
         const baseColor = currentColors[provIndex] || color;
         return hoverStates[provIndex] ? darkenColor(baseColor, 20) : baseColor;
     };
-
-    export let selectedProvinceIndex;
-    export let menuPosition;
-    export let menuVisible;
-    export const totalLevel = 5;
 
     let tooltipVisible = false;
     let tooltipPosition = {x: 0, y: 0};
