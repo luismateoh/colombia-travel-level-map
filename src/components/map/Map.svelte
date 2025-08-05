@@ -311,7 +311,8 @@
         <div class="flex flex-row flex-wrap my-3">
             <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0">
                 <div class="flex flex-col sticky top-20 gap-2">
-                    <!-- Mensaje de sitio en construcción -->
+                    <!-- Mensaje de sitio en construcción - COMENTADO TEMPORALMENTE PARA SCREENSHOT -->
+                    <!--
                     <div class="p-4 w-full rounded-lg border shadow-sm shadow-orange-100 bg-orange-50">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
@@ -329,6 +330,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
 
                     <!-- Estadísticas del usuario -->
                     <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
