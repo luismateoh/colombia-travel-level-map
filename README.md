@@ -1,8 +1,8 @@
-## Colombian Travel Level Map
+# Colombian Travel Level Map 🇨🇴
 
 Interactive map of Colombia where you can track your travel experiences by department. Mark each department with different levels based on your travel status - from planning to visit to having lived there.
 
-![app.png](img_1.png)
+![Colombian Travel Level Map](img_1.png)
 
 ## 🌍 About This Project
 
@@ -14,85 +14,134 @@ This project is based on a series of travel level maps from different countries:
 
 This Colombian adaptation builds upon these excellent projects, adapting the concept for Colombia's 32 departments and Bogotá D.C.
 
+## 🎨 Travel Levels
+
+Each department can be marked with one of six travel levels:
+
+- **Nunca estuviste** (White) - Never been there
+- **Pasaste por ahí** (Blue) - Passed through
+- **Aterrizaste ahí** (Green) - Landed there
+- **Visitaste ahí** (Yellow) - Visited there
+- **Te quedaste ahí** (Orange) - Stayed there
+- **Viviste ahí** (Red) - Lived there
+
 ## 🚀 Quick Start
 
 1. **Clone the repository:**
-
    ```bash
-   git clone https://github.com/Porter-smith/astro-firebase-svelte-tailwind-starter.git
+   git clone https://github.com/yourusername/colombia-travel-level-map.git
    ```
 
 2. **Navigate to the project directory:**
-
    ```bash
-   cd astro-firebase-svelte-tailwind-starter
+   cd colombia-travel-level-map
    ```
 
-3. **Install the dependencies:**
-
+3. **Install dependencies:**
    ```bash
    pnpm install
    ```
 
-4. **Start the development server:**
+4. **Set up Firebase (see setup section below)**
 
+5. **Start the development server:**
    ```bash
    pnpm run dev
    ```
 
-# Quickstart
+## 🔧 Tech Stack
 
-Follow this guide to quickly set up Firebase for your project. For more in-depth instructions,
-see [FIREBASE_SETUP.md](./docs/FIREBASE_SETUP.md).
+- **Frontend**: Astro + Svelte + TypeScript
+- **Styling**: Tailwind CSS
+- **Authentication**: Firebase Auth
+- **Database**: Firestore
+- **Package Manager**: pnpm
 
-## Obtain Firebase Keys
+## 🔥 Firebase Setup
 
-### Service Account Key
+Follow this guide to quickly set up Firebase for your project. For more detailed instructions, see [FIREBASE_SETUP.md](./docs/FIREBASE_SETUP.md).
 
-1. Go to the [Firebase Console](https://console.firebase.google.com/).
-2. Navigate to `Project settings` > `Service accounts`.
-3. Click `Generate new private key`, then download and secure the JSON file.
+### Obtain Firebase Keys
 
-### Web App Configuration
+#### Service Account Key
+1. Go to the [Firebase Console](https://console.firebase.google.com/)
+2. Navigate to `Project settings` > `Service accounts`
+3. Click `Generate new private key`, then download and secure the JSON file
 
-1. If you haven't added a web app to [Firebase](https://console.firebase.google.com/), click the web icon (`</>`)
-   in `Project settings` > `Your apps` to create one.
-2. Find your web app and you should see your `configuration`
-3. Copy the configuration object.
+#### Web App Configuration
+1. If you haven't added a web app to Firebase, click the web icon (`</>`) in `Project settings` > `Your apps` to create one
+2. Find your web app and copy the configuration object
 
-## Update Configuration Files
+### Quick Setup with Helper Script
 
-Place your keys in the appropriate files:
+1. Save your service account credentials as `service-account.json` in the project's root
+2. Run the helper script:
+   ```bash
+   node scripts/createEnvFromServiceAccount.js
+   ```
+3. Update `src/firebase/client.ts` with your web app configuration
+4. **Important**: Remove `service-account.json` after setup to protect your credentials
 
-- `.env`: Add service account key values from the downloaded JSON.
-- `src/firebase/client.ts`: Insert the web app configuration object.
+### Enable Authentication
 
-### Set up .env with Helper Script
+1. In Firebase Console, go to `Authentication`
+2. Click `Get started`
+3. Enable Google sign-in and configure according to Firebase's prompts
 
-To configure your environment variables quickly:
+## 🎯 Features
 
-Save your service account creds as `service-account.json` in the project's root.
-Run
+- Interactive map of all Colombian departments
+- User authentication with Google
+- Personal travel level tracking
+- Data persistence with Firestore
+- Responsive design
+- Map export functionality
+- Multi-language support
 
-```bash
- node scripts/createEnvFromServiceAccount.js
+## 🛠️ Development
+
+### Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm test` - Run tests
+- `pnpm lint` - Run linter
+
+### Project Structure
+
+```
+src/
+├── components/          # Svelte components
+├── firebase/           # Firebase configuration
+├── layouts/            # Astro layouts
+├── pages/              # Astro pages
+└── css/                # Global styles
 ```
 
-A .env file with all Firebase variables will be generated. So you don't have to copy and paste one by one each key.
+## 🚀 Future Features
 
-**Note:** After setting up the .env file, remember to remove the service-account.json from your project's root directory
-to protect your credentials.
+- **Achievement system**: Badges like "Caribbean Explorer", "Andean Expert"
+- **User comparisons**: Rankings and statistics
+- **Social sharing**: Share your travel map on social media
+- **Export options**: SVG, PDF formats
+- **Department information**: 
+  - Tourist information for each department
+  - Representative photos
+  - Demographic and economic data
+  - Links to official tourism resources
 
-## Enable Authentication
+## 📄 License
 
-### Configure Auth Methods
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-1. In [Firebase Console](https://console.firebase.google.com/), go to `Authentication`.
-2. Click `Get started`.
-3. Enable your desired sign-in methods and configure each according to Firebase's prompts.
+## 🤝 Contributing
 
-## Ready to Go
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-You should now be able to run your application and use Firebase's authentication services.
+## 🙏 Acknowledgments
 
-🚀 Happy coding!
+- Original concept by zhung.com.tw
+- Philippines adaptation by OSSPhilippines
+- Colombia map data by aumentada
+- Built with Astro, Svelte, and Firebase

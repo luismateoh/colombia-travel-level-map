@@ -9,12 +9,12 @@
 
 
     export const PROVINCE_LEVEL_FILLS = [
-        0, // '#ffffff'
-        1, // '#3598db'
-        2, // '#30cc70'
-        3, // '#f3c218'
-        4, // '#d58337'
-        5, // '#e84c3d'
+        '#ffffff', // '0 - Nunca estuve ahí'
+        '#3598db', // '1 - Pasé por ahí'
+        '#30cc70', // '2 - Aterrice ahí'
+        '#f3c218', // '3 - Visité ahí'
+        '#d58337', // '4 - Me quede ahí'
+        '#e84c3d', // '5 - Viví ahí'
     ];
 
     export const MENU_OPTIONS = [

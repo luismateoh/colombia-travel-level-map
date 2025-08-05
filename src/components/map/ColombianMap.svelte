@@ -1,27 +1,12 @@
 <script>
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
-    import {getContext, onMount} from "svelte";
+    import {getContext} from "svelte";
 
 
     let color = '#ffffff';
 
     const provinceLevels = getContext('provinceLevels');
 
-
-    onMount(() => {
-        provinceLevels.subscribe(levels => {
-
-            levels.forEach((level, index) => {
-                const provinceElement = document.getElementById(PROVINCES[index].id);
-                if (provinceElement) {
-                    const path = provinceElement.querySelector('path');
-                    if (path) {
-                        path.style.fill = PROVINCE_LEVEL_FILLS[level];
-                    }
-                }
-            });
-        });
-    });
 
     export let selectedProvinceIndex;
     export let menuPosition;

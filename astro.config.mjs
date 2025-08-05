@@ -44,9 +44,5 @@ export default defineConfig({
       // Optimize SSR external dependencies
       noExternal: ['firebase']
     }
-  },
-  experimental: {
-    // Enable view transitions for better UX
-    viewTransitions: true
   }
 });
