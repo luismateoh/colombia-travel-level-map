@@ -42,8 +42,6 @@
         <div class="flex gap-6">
             {#if user}
                 <UserDropdown {user}/>
-            {:else}
-                <Button href="/signin" variant="rounded">Iniciar sesión</Button>
             {/if}
         </div>
     </div>
