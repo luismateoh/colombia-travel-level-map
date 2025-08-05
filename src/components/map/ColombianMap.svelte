@@ -2,23 +2,59 @@
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
     import {getContext, onMount} from "svelte";
 
-
     let color = '#ffffff';
-
+    
     const provinceLevels = getContext('provinceLevels');
 
+    // Variables reactivas para manejar colores y hover states
+    let currentColors = [];
+    let hoverStates = [];
 
+    // Initialize arrays
     onMount(() => {
-        provinceLevels.subscribe(levels => {
-
-            levels.forEach((level, index) => {
-                const provinceElement = document.getElementById(PROVINCES[index].id);
-                if (provinceElement) {
-                    provinceElement.style.fill = PROVINCE_LEVEL_FILLS[level];
-                }
-            });
-        });
+        currentColors = new Array(PROVINCES.length).fill(color);
+        hoverStates = new Array(PROVINCES.length).fill(false);
+        
+        // Trigger initial color update if provinceLevels already has data
+        if ($provinceLevels && $provinceLevels.length > 0) {
+            updateColors();
+        }
     });
+
+    // Function to update colors - RESTAURADO A COLORES ORIGINALES
+    const updateColors = () => {
+        if ($provinceLevels && $provinceLevels.length > 0) {
+            console.log('🎨 Actualizando colores del mapa:', $provinceLevels);
+            const newColors = $provinceLevels.map((level) => {
+                const colorValue = PROVINCE_LEVEL_FILLS[level] || PROVINCE_LEVEL_FILLS[0];
+                console.log(`🎨 Nivel ${level} -> Color ${colorValue}`);
+                return colorValue;
+            });
+            currentColors = newColors;
+            console.log('🎨 Colores aplicados:', newColors);
+            
+            // Limpiar cualquier texto que pueda haber quedado
+            setTimeout(() => {
+                PROVINCES.forEach((province) => {
+                    const existingText = document.getElementById(`text-${province.id}`);
+                    if (existingText) {
+                        existingText.remove();
+                    }
+                });
+            }, 100);
+        }
+    };
+
+    // Reactive statement para actualizar colores cuando cambien los niveles
+    $: if ($provinceLevels) {
+        updateColors();
+    }
+
+    // Función para obtener el color final de una provincia (considerando hover)
+    const getFinalColor = (provIndex) => {
+        const baseColor = currentColors[provIndex] || color;
+        return hoverStates[provIndex] ? darkenColor(baseColor, 20) : baseColor;
+    };
 
     export let selectedProvinceIndex;
     export let menuPosition;
@@ -48,9 +84,13 @@
 
     const handleMouseEnter = (event) => {
         const targetElement = event.currentTarget;
-        const provIndex = targetElement.getAttribute('index');
-        const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-        targetElement.style.fill = darkenColor(currentColor, 20);
+        const provIndex = parseInt(targetElement.getAttribute('index'));
+        
+        // Actualizar estado de hover
+        hoverStates[provIndex] = true;
+        hoverStates = [...hoverStates]; // Trigger reactivity
+        
+        // Configurar tooltip
         const position = targetElement.getBoundingClientRect();
         tooltipPosition = {
             x: position.x + window.scrollX,
@@ -62,8 +102,12 @@
 
     const handleMouseLeave = (event) => {
         const targetElement = event.currentTarget;
-        const provIndex = targetElement.getAttribute('index');
-        targetElement.style.fill = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
+        const provIndex = parseInt(targetElement.getAttribute('index'));
+        
+        // Actualizar estado de hover
+        hoverStates[provIndex] = false;
+        hoverStates = [...hoverStates]; // Trigger reactivity
+        
         tooltipVisible = false;
     };
 
@@ -92,7 +136,6 @@
         version="1.1"
         viewBox="0 0 840 1155"
         xmlSpace="preserve"
-
 >
     <g id="Background">
         <path
@@ -101,7 +144,6 @@
                 stroke-width="0.75"
                 d="M -1.031 1.031 H 841.288 V 1155 H 9 z"
                 onClick={(event) => handleOutsideClick(event)}
-
         >
         </path>
     </g>
@@ -112,12 +154,11 @@
                 class="province-layer"
                 id={province.id}
                 transform={province.transform}
-
         >
             <path
                     id={province.id}
                     index={provIndex}
-                    fill={$provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color}
+                    fill={getFinalColor(provIndex)}
                     fill-rule="nonzero"
                     stroke="#BFDBFE"
                     stroke-dasharray="none"
@@ -130,18 +171,17 @@
                     d={province.drawPath}
                     opacity="2"
                     vector-effect="non-scaling-stroke"
+                    style="cursor: pointer;"
                     on:click={handleProvinceClick}
-                    on:mouseover={handleMouseEnter}
+                    on:mouseenter={handleMouseEnter}
                     on:mouseleave={handleMouseLeave}
                     on:focus={handleProvinceClick}
                     on:blur={handleProvinceClick}
                     on:keydown={(event) => { if (event.key === 'Enter') handleProvinceClick(event); }}
-                    tabindex="-1"
+                    tabindex="0"
                     role="button"
             >
-
             </path>
-
         </g>
     {/each}
 </svg>

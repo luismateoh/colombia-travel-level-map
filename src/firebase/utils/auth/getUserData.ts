@@ -5,11 +5,17 @@
  */
 
 import { getAuth } from "firebase-admin/auth";
-import { app } from "@/firebase/server";
+import { getApp } from "@/firebase/server";
 
 async function getUserData(cookie: string | null) {
   // If there's no cookie, return null immediately.
   if (cookie === null) {
+    return null;
+  }
+
+  const app = getApp();
+  if (!app) {
+    console.warn("Firebase Admin not available. Cannot verify user data.");
     return null;
   }
 

@@ -1,8 +1,18 @@
 import type { APIRoute } from "astro";
-import { app } from "@/firebase/server";
+import { getApp } from "@/firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
+  const app = getApp();
+  if (!app) {
+    return new Response(
+      JSON.stringify({
+        error: "Firebase Admin not available",
+      }),
+      { status: 503 }
+    );
+  }
+
   const auth = getAuth(app);
 
   /* Get token from request headers */

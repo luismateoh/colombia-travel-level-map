@@ -13,6 +13,8 @@ import {
   getAuth,
   inMemoryPersistence,
   updateProfile,
+  setPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
 import { app } from "@/firebase/client";
 import fetchSignIn from "../../../services/api/fetchSignIn";
@@ -21,6 +23,9 @@ const auth = getAuth(app);
 auth.setPersistence(inMemoryPersistence);
 
 async function handleSignup(name: string, email: string, password: string) {
+  // Establecer persistencia de sesión
+  await setPersistence(auth, browserSessionPersistence);
+
   // Register the user using Firebase's client SDK
   const userCredential = await createUserWithEmailAndPassword(
     auth,

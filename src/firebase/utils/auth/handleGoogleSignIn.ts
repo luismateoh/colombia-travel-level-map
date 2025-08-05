@@ -6,12 +6,15 @@
  *
  * @throws Will throw an error if the Google sign-in process or the server session setup fails.
  */
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { app } from "@/firebase/client";
 
 async function handleGoogleSignIn() {
   const auth = getAuth(app);
   try {
+    // Establecer persistencia antes de autenticar
+    await setPersistence(auth, browserSessionPersistence);
+    
     const provider = new GoogleAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
 

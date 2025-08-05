@@ -6,9 +6,15 @@
  * @throws {Error} - If an error occurs during the verification of the session cookie.
  */
 import { getAuth } from "firebase-admin/auth";
-import { app } from "@/firebase/server";
+import { getApp } from "@/firebase/server";
 
 async function isLoggedIn(cookie: string): Promise<boolean> {
+  const app = getApp();
+  if (!app) {
+    console.warn("Firebase Admin not available. Cannot verify login status.");
+    return false;
+  }
+
   const auth = getAuth(app);
 
   if (cookie) {

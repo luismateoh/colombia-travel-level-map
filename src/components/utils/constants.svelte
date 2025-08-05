@@ -9,12 +9,12 @@
 
 
     export const PROVINCE_LEVEL_FILLS = [
-        '#ffffff',
-        '#3598db',
-        '#30cc70',
-        '#f3c218',
-        '#d58337',
-        '#e84c3d',
+        0, // '#ffffff'
+        1, // '#3598db'
+        2, // '#30cc70'
+        3, // '#f3c218'
+        4, // '#d58337'
+        5, // '#e84c3d'
     ];
 
     export const MENU_OPTIONS = [

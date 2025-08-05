@@ -1,7 +1,8 @@
 <script>
     import {
         getAuth,
-        inMemoryPersistence,
+        setPersistence,
+        browserSessionPersistence,
         signInWithEmailAndPassword,
     } from "firebase/auth";
     import {app} from "../firebase/client";
@@ -14,16 +15,19 @@
 
     let email, password, errorMessage, loading;
     const auth = getAuth(app);
-    auth.setPersistence(inMemoryPersistence);
 
     async function handleLogin() {
         loading = true;
         try {
+            // Establecer persistencia antes de autenticar
+            await setPersistence(auth, browserSessionPersistence);
+            
             const userCredential = await signInWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
+            
             const idToken = await userCredential.user.getIdToken();
             const redirectedUrl = await fetchSignIn(idToken);
             if (redirectedUrl) {

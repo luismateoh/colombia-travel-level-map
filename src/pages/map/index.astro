@@ -9,10 +9,6 @@ const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 
 const user = await getUserData(sessionCookie);
 
-if (!user) {
-    return Astro.redirect("/signin");
-}
-
 const title = "Mapa de Colombia";
 const description = "Mapa de Colombia para visualizar los departamentos visitados";
 ---

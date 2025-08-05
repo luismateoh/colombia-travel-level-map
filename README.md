@@ -1,8 +1,20 @@
-## Colombian Map
+## Colombian Travel Level Map
 
-Colombian map where you can fill with th departments that you have.
+Interactive map of Colombia where you can track your travel experiences by department. Mark each department with different levels based on your travel status - from planning to visit to having lived there.
 
 ![app.png](img_1.png)
+
+## 🌍 About This Project
+
+This project is based on a series of travel level maps from different countries:
+
+- **Original inspiration**: [Japan Travel Level Map](https://zhung.com.tw/japanex/) by zhung.com.tw
+- **Philippines version**: [Philippines Travel Level Map](https://github.com/OSSPhilippines/philippines-travel-level-map) by OSSPhilippines
+- **Colombia SVG data**: [Colombia Map Data](https://github.com/aumentada/colombia) by aumentada
+
+This Colombian adaptation builds upon these excellent projects, adapting the concept for Colombia's 32 departments and Bogotá D.C.
+
+## 🚀 Quick Start
 
 1. **Clone the repository:**
 

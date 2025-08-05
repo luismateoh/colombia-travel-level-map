@@ -6,3 +6,10 @@ export const GET: APIRoute = ({ redirect, cookies }) => {
   });
   return redirect("/");
 };
+
+export const POST: APIRoute = ({ redirect, cookies }) => {
+  cookies.delete("session", {
+    path: "/",
+  });
+  return redirect("/");
+};

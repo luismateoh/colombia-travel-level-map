@@ -1,5 +1,6 @@
 import { getAuth } from "firebase-admin/auth";
 import type { UserRecord } from "firebase-admin/auth";
+import { getApp } from "@/firebase/server";
 
 /**
  * Updates the data for a specified user.
@@ -19,8 +20,14 @@ type UserUpdates = {
 async function updateUserData(
   uid: string,
   updates: UserUpdates
-): Promise<UserRecord> {
-  const auth = getAuth();
+): Promise<UserRecord | null> {
+  const app = getApp();
+  if (!app) {
+    console.warn("Firebase Admin not available. Cannot update user data.");
+    return null;
+  }
+
+  const auth = getAuth(app);
 
   if (updates?.email) {
     // * When Admin firebase SDK when you change email you need to set emailVerified to true

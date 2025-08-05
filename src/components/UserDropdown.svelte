@@ -3,9 +3,14 @@
     import DashboardIcon from "./icons/DashboardIcon.svelte";
     import LogoutIcon from "./icons/LogoutIcon.svelte";
     import {Button} from "@/components/base/button";
+    import { logoutUser } from "@/firebase/utils/authStore";
     import type {User} from "firebase/auth";
 
     export let user: User;
+
+    const handleLogout = async () => {
+        await logoutUser();
+    };
 </script>
 
 {#if user?.email}
@@ -43,12 +48,10 @@
                 <p class="text-sm">Editar su cuenta</p>
             </Button>
 
-            <form action="/api/auth/signout">
-                <Button type="submit" variant="ghost">
-                    <LogoutIcon/>
-                    <p class="text-sm">Cerrar sesión</p>
-                </Button>
-            </form>
+            <Button on:click={handleLogout} variant="ghost">
+                <LogoutIcon/>
+                <p class="text-sm">Cerrar sesión</p>
+            </Button>
         </div>
     </Popover>
 {/if}
