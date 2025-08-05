@@ -11,6 +11,7 @@
     import Download from "@/components/icons/Download.svelte";
     import GoogleSignInButton from '@/components/social/GoogleSignInButton.svelte';
     import ResetMapModal from '@/components/ResetMapModal.svelte';
+    import { t } from '@/lib/i18n';
 
     // Props
     let className = '';
@@ -203,6 +204,20 @@
         showResetModal = false;
         console.log('✅ Mapa reseteado exitosamente');
     };
+
+    // Función helper para convertir etiquetas a claves de traducción
+    const getLevelTranslationKey = (label) => {
+        const labelMap = {
+            'Viví ahí': 'vivíahí',
+            'Me quede ahí': 'mequedeahí',
+            'Visité ahí': 'visitéahí',
+            'Aterrice ahí': 'aterriceahí',
+            'Pasé por ahí': 'paséporahí',
+            'Nunca estuve ahí': 'nuncaestuveahí'
+        };
+        return labelMap[label] || label.toLowerCase().replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    };
+
 </script>
 
 <section class="mx-5 w-full max-w-screen-xl items-center justify-between">
@@ -219,10 +234,10 @@
                         </div>
                         <div class="ml-3">
                             <h3 class="text-sm font-bold text-orange-800">
-                                🚧 Sitio en construcción
+                                {$t('siteUnderConstruction')}
                             </h3>
                             <p class="text-xs text-orange-700 mt-1">
-                                Estamos mejorando la experiencia. Algunos detalles están siendo arreglados.
+                                {$t('improvingExperience')}
                             </p>
                         </div>
                     </div>
@@ -233,10 +248,10 @@
                     <div class="flex flex-row justify-between items-center">
                         <div class="flex flex-col">
                             <span class="text-md font-bold text-gray-900">
-                                Puntaje total
+                                {$t('totalScore')}
                             </span>
                             <p class="text-sm text-gray-700">
-                                Suma de los puntajes de cada departamento
+                                {$t('totalScoreDescription')}
                             </p>
                         </div>
                         <div class="flex flex-row items-center gap-2">
@@ -244,7 +259,7 @@
                                 {totalLevel}
                             </span>
                             {#if $isLoading}
-                                <span class="text-xs text-gray-500">Cargando...</span>
+                                <span class="text-xs text-gray-500">{$t('loading')}</span>
                             {:else if isSaving}
                                 <span class="text-xs text-blue-600 flex items-center gap-1">
                                     <div class="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
@@ -253,7 +268,7 @@
                                 <div class="group relative">
                                     <span class="text-green-600 cursor-default text-lg">✅</span>
                                     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-                                        Guardado en la nube
+                                        {$t('savedInCloud')}
                                         <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
                                     </div>
                                 </div>
@@ -267,11 +282,11 @@
                     <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
                         <div class="flex flex-col gap-2">
                             <div class="flex justify-between">
-                                <span class="text-sm text-gray-700">Departamentos visitados:</span>
+                                <span class="text-sm text-gray-700">{$t('visitedDepartments')}:</span>
                                 <span class="text-sm font-bold text-gray-900">{visitedCount}/{PROVINCES.length}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-gray-700">Progreso:</span>
+                                <span class="text-sm text-gray-700">{$t('progress')}:</span>
                                 <span class="text-sm font-bold text-gray-900">{completionPercentage}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
@@ -287,10 +302,10 @@
                     <div class="p-4 w-full rounded-lg border shadow-sm shadow-yellow-100 bg-yellow-50">
                         <div class="flex flex-col">
                             <span class="text-md font-bold text-yellow-800">
-                                🔐 Inicia sesión para guardar
+                                {$t('signInToSave')}
                             </span>
                             <p class="text-sm text-yellow-700 mb-3">
-                                Tu progreso se guardará automáticamente
+                                {$t('progressWillBeSaved')}
                             </p>
                             <div class="flex justify-center">
                                 <GoogleSignInButton />
@@ -301,7 +316,7 @@
 
                 <!-- Guía de niveles -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                    <h3 class="text-md font-bold text-gray-900 mb-3">📖 Guía de niveles</h3>
+                    <h3 class="text-md font-bold text-gray-900 mb-3">{$t('levelGuide')}</h3>
                     <ul class="nav flex flex-col overflow-hidden align-middle gap-2">
                         {#each MENU_OPTIONS as {icon, label, level, fill, textColor, textDescription}}
                             <li id={level} class="flex flex-row gap-3">
@@ -313,10 +328,10 @@
                                 </span>
                                 <div class="flex flex-col">
                                     <span class="text-sm font-bold text-gray-900">
-                                        {label}
+                                        {$t(`levels.${getLevelTranslationKey(label)}`)}
                                     </span>
                                     <p class="text-xs text-gray-600">
-                                        {textDescription}
+                                        {$t(`levels.${getLevelTranslationKey(label)}Description`)}
                                     </p>
                                 </div>
                             </li>
@@ -324,14 +339,14 @@
                     </ul>
                     <div class="mt-3 pt-3 border-t border-gray-200">
                         <p class="text-xs text-gray-600">
-                            💡 Haz clic en cualquier departamento del mapa para asignar tu nivel de experiencia
+                            {$t('levelGuideTooltip')}
                         </p>
                     </div>
                 </div>
 
-                <!-- Botones de descarga - Disponibles para todos los usuarios -->
+                <!-- Botones de descarga -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                    <h3 class="text-md font-bold text-gray-900 mb-3">📥 Descargar mapa</h3>
+                    <h3 class="text-md font-bold text-gray-900 mb-3">{$t('downloadMap')}</h3>
                     <div class="flex flex-col gap-2">
                         <button
                             on:click={handleDownloadImage}
@@ -340,9 +355,9 @@
                         >
                             <Download size="16" color="white" />
                             {#if isDownloading}
-                                Generando imagen...
+                                {$t('generatingImage')}
                             {:else}
-                                Descargar como imagen PNG
+                                {$t('downloadAsPNG')}
                             {/if}
                         </button>
                         <button
@@ -350,61 +365,61 @@
                             class="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
                         >
                             <Download size="16" color="white" />
-                            Descargar datos como JSON
+                            {$t('downloadAsJSON')}
                         </button>
                     </div>
                     <p class="text-xs text-gray-600 mt-2">
                         {#if $currentUser}
-                            💡 Guarda tu progreso y compártelo con otros
+                            {$t('saveAndShare')}
                         {:else}
-                            💡 Crea tu mapa personalizado y descárgalo
+                            {$t('createCustomMap')}
                         {/if}
                     </p>
                 </div>
 
-                <!-- Opción de resetear mapa - Solo para usuarios autenticados -->
+                <!-- Opción de resetear mapa -->
                 {#if $currentUser}
                     <div class="p-4 w-full rounded-lg border shadow-sm shadow-red-100 bg-red-50">
-                        <h3 class="text-md font-bold text-red-800 mb-3">🔄 Resetear mapa</h3>
+                        <h3 class="text-md font-bold text-red-800 mb-3">{$t('resetMap')}</h3>
                         <p class="text-sm text-red-700 mb-3">
-                            Elimina todo el progreso y vuelve al estado inicial
+                            {$t('resetDescription')}
                         </p>
                         <button
                             on:click={() => showResetModal = true}
                             class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
                         >
-                            Resetear todo el mapa
+                            {$t('resetAllMap')}
                         </button>
                     </div>
                 {/if}
 
                 <!-- Información del proyecto -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                    <h3 class="text-md font-bold text-gray-900 mb-3">ℹ️ Acerca del proyecto</h3>
+                    <h3 class="text-md font-bold text-gray-900 mb-3">{$t('aboutProject')}</h3>
                     <p class="text-sm text-gray-700 mb-3">
-                        Este proyecto está basado en una serie de mapas de viajes interactivos:
+                        {$t('projectDescription')}
                     </p>
                     <div class="flex flex-col gap-1 text-xs">
                         <a href="https://zhung.com.tw/japanex/" target="_blank" rel="noopener noreferrer" 
                            class="text-blue-600 hover:text-blue-800 underline">
-                            🇯🇵 Mapa original de Japón
+                            {$t('originalJapanMap')}
                         </a>
                         <a href="https://github.com/OSSPhilippines/philippines-travel-level-map" target="_blank" rel="noopener noreferrer"
                            class="text-blue-600 hover:text-blue-800 underline">
-                            🇵🇭 Versión de Filipinas
+                            {$t('philippinesVersion')}
                         </a>
                         <a href="https://github.com/aumentada/colombia" target="_blank" rel="noopener noreferrer"
                            class="text-blue-600 hover:text-blue-800 underline">
-                            🇨🇴 Datos del mapa de Colombia
+                            {$t('colombiaMapData')}
                         </a>
                     </div>
                     <p class="text-xs text-gray-600 mt-2">
-                        Construido con Astro + Svelte + Firebase
+                        {$t('builtWith')}
                     </p>
                     
                     <!-- Marca personal -->
                     <div class="mt-3 flex text-center text-sm text-gray-500 dark:text-gray-400 lg:text-right">
-                        Mapa de Colombia · Site by 
+                        {$t('title')} · {$t('siteBy')} 
                         <a class="flex items-center justify-center text-center" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/luismateoh/">
                             <div class="mx-1 w-5 rounded-sm bg-blue-900 py-1 align-middle text-[9px] text-white hover:animate-spin">
                                 <p class="-m-1 align-middle">LM</p>
@@ -417,23 +432,18 @@
 
         <main class="w-full md:w-2/3 pt-1 px-2 mb-2 md:mb-0">
             <div class="w-full rounded-xl bg-blue-200 p-2 border shadow-sm shadow-indigo-100">
-                {#if isLoadingData || $isLoading}
-                    <div class="flex justify-center items-center h-96">
-                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                        <span class="ml-2 text-gray-600">
-                            {#if $currentUser}
-                                📥 Cargando tu progreso...
-                            {:else}
-                                🗺️ Cargando mapa...
-                            {/if}
-                        </span>
+                <ColombiaMap
+                    bind:selectedProvinceIndex={selectedProvinceIndex}
+                    bind:menuPosition={menuPosition}
+                    bind:menuVisible={menuVisible}
+                />
+                
+                <!-- Overlay de carga discreto solo para datos del usuario -->
+                {#if isLoadingData && $currentUser}
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg flex items-center gap-2">
+                        <div class="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                        <span class="text-sm text-gray-600">{$t('loadingProgress')}</span>
                     </div>
-                {:else}
-                    <ColombiaMap
-                        bind:selectedProvinceIndex={selectedProvinceIndex}
-                        bind:menuPosition={menuPosition}
-                        bind:menuVisible={menuVisible}
-                    />
                 {/if}
             </div>
 
@@ -477,7 +487,7 @@
                                         if (event.key === 'Enter' || event.key === ' ')
                                         {handleLevelClick(event);}}
                                     }>
-                                    {label}
+                                    {$t(`levels.${getLevelTranslationKey(label)}`)}
                                 </Button>
                             {/each}
                         </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Button } from "@/components/base/button";
     import Cross from "@/components/icons/Cross.svelte";
+    import { t } from "@/lib/i18n";
 
     export let isOpen = false;
     export let onConfirm: () => void;
@@ -12,11 +13,11 @@
     
     // Acertijos simples para verificar la intención
     const puzzles = [
-        { question: "¿Cuál es la capital de Colombia?", answer: "bogota" },
-        { question: "¿En qué continente está Colombia?", answer: "america" },
-        { question: "Escribe 'RESETEAR' en mayúsculas:", answer: "RESETEAR" },
-        { question: "¿Cuántos departamentos tiene Colombia? (32 o 33)", answer: "32" },
-        { question: "Escribe la palabra 'confirmar':", answer: "confirmar" }
+        { question: $t('puzzles.capitalColombia'), answer: "bogota" },
+        { question: $t('puzzles.continent'), answer: "america" },
+        { question: $t('puzzles.typeReset'), answer: "RESETEAR" },
+        { question: $t('puzzles.departments'), answer: "32" },
+        { question: $t('puzzles.typeConfirm'), answer: "confirmar" }
     ];
     
     let currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
@@ -85,7 +86,7 @@
             </button>
 
             <!-- Title -->
-            <h2 class="text-xl font-bold text-red-600 mb-4">⚠️ Resetear Mapa</h2>
+            <h2 class="text-xl font-bold text-red-600 mb-4">{$t('resetMapTitle')}</h2>
             
             <!-- Warning -->
             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
@@ -97,7 +98,7 @@
                     </div>
                     <div class="ml-3">
                         <p class="text-sm text-yellow-700">
-                            <strong>Esta acción no se puede deshacer.</strong> Se perderán todos los niveles marcados en el mapa y volverá al estado inicial.
+                            <strong>{$t('resetWarning')}</strong> {$t('resetWarningDescription')}
                         </p>
                     </div>
                 </div>
@@ -106,7 +107,7 @@
             <!-- Puzzle -->
             <div class="mb-4">
                 <p class="text-sm font-medium text-gray-700 mb-2">
-                    Para confirmar que deseas resetear el mapa, responde esta pregunta:
+                    {$t('confirmReset')}
                 </p>
                 <p class="text-md font-semibold text-gray-900 mb-3">
                     {currentPuzzle.question}
@@ -123,27 +124,27 @@
                 />
                 
                 {#if showError}
-                    <p class="text-red-500 text-sm mt-1">❌ Respuesta incorrecta. Inténtalo de nuevo.</p>
+                    <p class="text-red-500 text-sm mt-1">{$t('incorrectAnswer')}</p>
                 {/if}
                 
                 {#if isCorrect}
-                    <p class="text-green-600 text-sm mt-1">✅ ¡Correcto! Ahora puedes resetear el mapa.</p>
+                    <p class="text-green-600 text-sm mt-1">{$t('correctAnswer')}</p>
                 {/if}
             </div>
 
             <!-- Buttons -->
             <div class="flex gap-3 mt-6">
                 <Button variant="ghost" on:click={handleCancel} class="flex-1">
-                    Cancelar
+                    {$t('cancel')}
                 </Button>
                 
                 {#if !isCorrect}
                     <Button on:click={checkAnswer} class="flex-1 bg-blue-600 hover:bg-blue-700">
-                        Verificar Respuesta
+                        {$t('verifyAnswer')}
                     </Button>
                 {:else}
                     <Button on:click={handleConfirm} class="flex-1 bg-red-600 hover:bg-red-700">
-                        Resetear Mapa
+                        {$t('resetMapButton')}
                     </Button>
                 {/if}
             </div>

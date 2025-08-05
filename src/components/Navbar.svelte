@@ -1,7 +1,9 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import UserDropdown from "@/components/UserDropdown.svelte";
+    import LanguageSelector from "@/components/LanguageSelector.svelte";
     import { currentUser, isLoading } from "@/firebase/utils/authStore";
+    import { t, initializeLanguage } from "@/lib/i18n";
     import type {User} from "firebase/auth";
     import type {UserRecord} from "firebase-admin/auth";
 
@@ -12,6 +14,9 @@
     $: displayUser = $currentUser || user;
 
     onMount(() => {
+        // Inicializar idioma desde localStorage
+        initializeLanguage();
+        
         const handleScroll = () => {
             scrolled = window.scrollY > 0;
         };
@@ -39,10 +44,11 @@
                     src="/flag.svg"
                     width="40"
             />
-            <p class="font-bold">Mapa de Colombia</p>
+            <p class="font-bold">{$t('title')}</p>
         </a>
 
-        <div class="flex gap-6 items-center">
+        <div class="flex gap-3 items-center">
+            <LanguageSelector />
             {#if displayUser}
                 <UserDropdown user={displayUser}/>
             {/if}

@@ -4,9 +4,10 @@ import Map from "../components/map/Map.svelte";
 import Navbar from "../components/Navbar.svelte";
 import getUserData from "@/firebase/utils/auth/getUserData";
 
-const title = "Mapa de Colombia";
-const description =
-    "Mapa de Colombia para visualizar los departamentos visitados";
+// Las traducciones se manejarán del lado del cliente
+// Estos son valores por defecto para SEO
+const title = "Mapa de Colombia | Colombia Travel Level Map";
+const description = "Mapa interactivo de Colombia para visualizar los departamentos visitados. Interactive map of Colombia to visualize visited departments.";
 const sessionCookie = Astro.cookies.get("session")?.value ?? null;
 const user = await getUserData(sessionCookie);
 ---

@@ -3,6 +3,7 @@
     import LogoutIcon from "./icons/LogoutIcon.svelte";
     import {Button} from "@/components/base/button";
     import { logoutUser } from "@/firebase/utils/authStore";
+    import { t } from "@/lib/i18n";
     import type {User} from "firebase/auth";
     import type {UserRecord} from "firebase-admin/auth";
 
@@ -41,7 +42,7 @@
 
             <Button on:click={handleLogout} variant="ghost">
                 <LogoutIcon/>
-                <p class="text-sm">Cerrar sesión</p>
+                <p class="text-sm">{$t('logout')}</p>
             </Button>
         </div>
     </Popover>

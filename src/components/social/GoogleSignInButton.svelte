@@ -4,6 +4,7 @@
   import handleGoogleSignIn from "@/firebase/utils/auth/handleGoogleSignIn";
   import Spinner from "../icons/Spinner.svelte";
   import { Button } from "../base/button";
+  import { t } from "@/lib/i18n";
 
   let loading = false;
 
@@ -17,9 +18,9 @@
 <Button variant="google" on:click={signIn} disabled={loading}>
   {#if loading}
     <Spinner />
-    Please wait
+    {$t('pleaseWait')}
   {:else}
     <GoogleIcon />
-    Sign in with Google
+    {$t('signInWithGoogle')}
   {/if}
 </Button>
