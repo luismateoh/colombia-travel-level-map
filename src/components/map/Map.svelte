@@ -1,7 +1,7 @@
 <script>
     import ColombiaMap from './ColombianMap.svelte';
     import {PROVINCES, MENU_OPTIONS, PROVINCE_LEVEL_FILLS} from '@/components/utils/constants.svelte';
-    import {onMount} from 'svelte';
+    import {onMount, setContext} from 'svelte';
     import {writable} from "svelte/store";
     import {Button} from "@/components/base/button";
     import Cross from "@/components/icons/Cross.svelte";
@@ -9,12 +9,17 @@
     import { downloadMapImage, downloadMapData } from '@/firebase/utils/downloadMap';
     import { currentUser, isLoading } from '@/firebase/utils/authStore';
     import Download from "@/components/icons/Download.svelte";
+    import GoogleSignInButton from '@/components/social/GoogleSignInButton.svelte';
+    import ResetMapModal from '@/components/ResetMapModal.svelte';
 
     // Props
     let className = '';
 
     // Create a writable store for the array of levels
     const provinceLevels = writable(new Array(PROVINCES.length).fill(0));
+
+    // Set the store in the context
+    setContext('provinceLevels', provinceLevels);
 
     let selectedProvinceIndex = 0;
     let menuPosition = {x: 0, y: 0};
@@ -24,6 +29,7 @@
     let hasLoadedInitialData = false;
     let saveTimeout = null;
     let isDownloading = false;
+    let showResetModal = false;
 
     // Variables reactivas para estadísticas
     $: stats = getUserMapStats($provinceLevels);
@@ -173,12 +179,55 @@
             alert('Error al descargar los datos. Por favor, inténtalo de nuevo.');
         }
     };
+
+    const handleResetMap = async () => {
+        console.log('🔄 Reseteando mapa...');
+        
+        // Resetear los datos localmente
+        provinceLevels.set(new Array(PROVINCES.length).fill(0));
+        
+        // Si hay usuario autenticado, también resetear en Firebase
+        if ($currentUser && hasLoadedInitialData) {
+            try {
+                const success = await saveUserMapData($currentUser.uid, new Array(PROVINCES.length).fill(0));
+                if (success) {
+                    console.log('✅ Mapa reseteado y guardado en Firebase');
+                } else {
+                    console.error('❌ Error guardando mapa reseteado en Firebase');
+                }
+            } catch (error) {
+                console.error('❌ Error guardando mapa reseteado:', error);
+            }
+        }
+        
+        showResetModal = false;
+        console.log('✅ Mapa reseteado exitosamente');
+    };
 </script>
 
 <section class="mx-5 w-full max-w-screen-xl items-center justify-between">
     <div class="flex flex-row flex-wrap my-3">
         <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0">
             <div class="flex flex-col sticky top-20 gap-2">
+                <!-- Mensaje de sitio en construcción -->
+                <div class="p-4 w-full rounded-lg border shadow-sm shadow-orange-100 bg-orange-50">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-orange-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-bold text-orange-800">
+                                🚧 Sitio en construcción
+                            </h3>
+                            <p class="text-xs text-orange-700 mt-1">
+                                Estamos mejorando la experiencia. Algunos detalles están siendo arreglados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Estadísticas del usuario -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
                     <div class="flex flex-row justify-between items-center">
@@ -199,7 +248,6 @@
                             {:else if isSaving}
                                 <span class="text-xs text-blue-600 flex items-center gap-1">
                                     <div class="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                                    Guardando...
                                 </span>
                             {:else if $currentUser && hasLoadedInitialData}
                                 <div class="group relative">
@@ -242,19 +290,44 @@
                                 🔐 Inicia sesión para guardar
                             </span>
                             <p class="text-sm text-yellow-700 mb-3">
-                                Tu progreso se guardará automáticamente en la nube
+                                Tu progreso se guardará automáticamente
                             </p>
-                            <div class="flex gap-2">
-                                <a href="/signin" class="bg-yellow-600 text-white px-3 py-1 rounded text-sm hover:bg-yellow-700 transition-colors">
-                                    Iniciar sesión
-                                </a>
-                                <a href="/signup" class="bg-yellow-800 text-white px-3 py-1 rounded text-sm hover:bg-yellow-900 transition-colors">
-                                    Registrarse
-                                </a>
+                            <div class="flex justify-center">
+                                <GoogleSignInButton />
                             </div>
                         </div>
                     </div>
                 {/if}
+
+                <!-- Guía de niveles -->
+                <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
+                    <h3 class="text-md font-bold text-gray-900 mb-3">📖 Guía de niveles</h3>
+                    <ul class="nav flex flex-col overflow-hidden align-middle gap-2">
+                        {#each MENU_OPTIONS as {icon, label, level, fill, textColor, textDescription}}
+                            <li id={level} class="flex flex-row gap-3">
+                                <span
+                                    class="flex justify-center align-middle mt-1 items-center h-8 min-w-8 rounded-md border border-gray-300"
+                                    style="background: {fill}; opacity:1;"
+                                >
+                                    <svelte:component this={icon} color={textColor}/>
+                                </span>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-bold text-gray-900">
+                                        {label}
+                                    </span>
+                                    <p class="text-xs text-gray-600">
+                                        {textDescription}
+                                    </p>
+                                </div>
+                            </li>
+                        {/each}
+                    </ul>
+                    <div class="mt-3 pt-3 border-t border-gray-200">
+                        <p class="text-xs text-gray-600">
+                            💡 Haz clic en cualquier departamento del mapa para asignar tu nivel de experiencia
+                        </p>
+                    </div>
+                </div>
 
                 <!-- Botones de descarga - Disponibles para todos los usuarios -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
@@ -289,35 +362,21 @@
                     </p>
                 </div>
 
-                <!-- Guía de niveles -->
-                <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                    <h3 class="text-md font-bold text-gray-900 mb-3">📖 Guía de niveles</h3>
-                    <ul class="nav flex flex-col overflow-hidden align-middle gap-2">
-                        {#each MENU_OPTIONS as {icon, label, level, fill, textColor, textDescription}}
-                            <li id={level} class="flex flex-row gap-3">
-                                <span
-                                    class="flex justify-center align-middle mt-1 items-center h-8 min-w-8 rounded-md border border-gray-300"
-                                    style="background: {fill}; opacity:1;"
-                                >
-                                    <svelte:component this={icon} color={textColor}/>
-                                </span>
-                                <div class="flex flex-col">
-                                    <span class="text-sm font-bold text-gray-900">
-                                        {label}
-                                    </span>
-                                    <p class="text-xs text-gray-600">
-                                        {textDescription}
-                                    </p>
-                                </div>
-                            </li>
-                        {/each}
-                    </ul>
-                    <div class="mt-3 pt-3 border-t border-gray-200">
-                        <p class="text-xs text-gray-600">
-                            💡 Haz clic en cualquier departamento del mapa para asignar tu nivel de experiencia
+                <!-- Opción de resetear mapa - Solo para usuarios autenticados -->
+                {#if $currentUser}
+                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-red-100 bg-red-50">
+                        <h3 class="text-md font-bold text-red-800 mb-3">🔄 Resetear mapa</h3>
+                        <p class="text-sm text-red-700 mb-3">
+                            Elimina todo el progreso y vuelve al estado inicial
                         </p>
+                        <button
+                            on:click={() => showResetModal = true}
+                            class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
+                        >
+                            Resetear todo el mapa
+                        </button>
                     </div>
-                </div>
+                {/if}
 
                 <!-- Información del proyecto -->
                 <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
@@ -374,7 +433,6 @@
                         bind:selectedProvinceIndex={selectedProvinceIndex}
                         bind:menuPosition={menuPosition}
                         bind:menuVisible={menuVisible}
-                        provinceLevels={provinceLevels}
                     />
                 {/if}
             </div>
@@ -429,3 +487,10 @@
         </main>
     </div>
 </section>
+
+<!-- Modal de reseteo -->
+<ResetMapModal 
+    isOpen={showResetModal}
+    onConfirm={handleResetMap}
+    onCancel={() => showResetModal = false}
+/>

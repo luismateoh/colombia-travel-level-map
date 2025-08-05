@@ -1,12 +1,15 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import UserDropdown from "@/components/UserDropdown.svelte";
-    import {Button} from "@/components/base/button";
+    import { currentUser, isLoading } from "@/firebase/utils/authStore";
     import type {User} from "firebase/auth";
     import type {UserRecord} from "firebase-admin/auth";
 
     export let user: User | UserRecord | null = null;
     let scrolled = false;
+
+    // Usar el store del cliente que se actualiza en tiempo real
+    $: displayUser = $currentUser || user;
 
     onMount(() => {
         const handleScroll = () => {
@@ -39,9 +42,9 @@
             <p class="font-bold">Mapa de Colombia</p>
         </a>
 
-        <div class="flex gap-6">
-            {#if user}
-                <UserDropdown {user}/>
+        <div class="flex gap-6 items-center">
+            {#if displayUser}
+                <UserDropdown user={displayUser}/>
             {/if}
         </div>
     </div>

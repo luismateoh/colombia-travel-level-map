@@ -1,28 +1,31 @@
 <script>
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
-    import {onMount} from "svelte";
+    import {getContext, onMount} from "svelte";
+
 
     let color = '#ffffff';
-    
-    export let provinceLevels;
+
+    const provinceLevels = getContext('provinceLevels');
+
+
+    onMount(() => {
+        provinceLevels.subscribe(levels => {
+
+            levels.forEach((level, index) => {
+                const provinceElement = document.getElementById(PROVINCES[index].id);
+                if (provinceElement) {
+                    const path = provinceElement.querySelector('path');
+                    if (path) {
+                        path.style.fill = PROVINCE_LEVEL_FILLS[level];
+                    }
+                }
+            });
+        });
+    });
+
     export let selectedProvinceIndex;
     export let menuPosition;
     export let menuVisible;
-
-    // Variables reactivas para manejar colores y hover states
-    $: currentColors = $provinceLevels.map(level => PROVINCE_LEVEL_FILLS[level] || PROVINCE_LEVEL_FILLS[0]);
-    let hoverStates = [];
-
-    // Initialize arrays
-    onMount(() => {
-        hoverStates = new Array(PROVINCES.length).fill(false);
-    });
-
-    // Función para obtener el color final de una provincia (considerando hover)
-    const getFinalColor = (provIndex) => {
-        const baseColor = currentColors[provIndex] || color;
-        return hoverStates[provIndex] ? darkenColor(baseColor, 20) : baseColor;
-    };
 
     let tooltipVisible = false;
     let tooltipPosition = {x: 0, y: 0};
@@ -47,13 +50,9 @@
 
     const handleMouseEnter = (event) => {
         const targetElement = event.currentTarget;
-        const provIndex = parseInt(targetElement.getAttribute('index'));
-        
-        // Actualizar estado de hover
-        hoverStates[provIndex] = true;
-        hoverStates = [...hoverStates]; // Trigger reactivity
-        
-        // Configurar tooltip
+        const provIndex = targetElement.getAttribute('index');
+        const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
+        targetElement.style.fill = darkenColor(currentColor, 20);
         const position = targetElement.getBoundingClientRect();
         tooltipPosition = {
             x: position.x + window.scrollX,
@@ -65,12 +64,8 @@
 
     const handleMouseLeave = (event) => {
         const targetElement = event.currentTarget;
-        const provIndex = parseInt(targetElement.getAttribute('index'));
-        
-        // Actualizar estado de hover
-        hoverStates[provIndex] = false;
-        hoverStates = [...hoverStates]; // Trigger reactivity
-        
+        const provIndex = targetElement.getAttribute('index');
+        targetElement.style.fill = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
         tooltipVisible = false;
     };
 
@@ -99,6 +94,7 @@
         version="1.1"
         viewBox="0 0 840 1155"
         xmlSpace="preserve"
+
 >
     <g id="Background">
         <path
@@ -107,6 +103,7 @@
                 stroke-width="0.75"
                 d="M -1.031 1.031 H 841.288 V 1155 H 9 z"
                 onClick={(event) => handleOutsideClick(event)}
+
         >
         </path>
     </g>
@@ -117,11 +114,12 @@
                 class="province-layer"
                 id={province.id}
                 transform={province.transform}
+
         >
             <path
                     id={province.id}
                     index={provIndex}
-                    fill={getFinalColor(provIndex)}
+                    fill={$provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color}
                     fill-rule="nonzero"
                     stroke="#BFDBFE"
                     stroke-dasharray="none"

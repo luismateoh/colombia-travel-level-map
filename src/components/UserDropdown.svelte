@@ -1,6 +1,5 @@
 <script lang="ts">
     import {Popover} from "@/components/base/popover";
-    import DashboardIcon from "./icons/DashboardIcon.svelte";
     import LogoutIcon from "./icons/LogoutIcon.svelte";
     import {Button} from "@/components/base/button";
     import { logoutUser } from "@/firebase/utils/authStore";
@@ -39,15 +38,6 @@
                     {user?.email}
                 </p>
             </div>
-            <Button href="/map" variant="ghost">
-                <DashboardIcon/>
-                <p class="text-sm">Mapa</p>
-            </Button>
-
-            <Button href="/account" variant="ghost">
-                <DashboardIcon/>
-                <p class="text-sm">Editar su cuenta</p>
-            </Button>
 
             <Button on:click={handleLogout} variant="ghost">
                 <LogoutIcon/>
