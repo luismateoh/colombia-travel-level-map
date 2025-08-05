@@ -381,6 +381,16 @@
                     <p class="text-xs text-gray-600 mt-2">
                         Construido con Astro + Svelte + Firebase
                     </p>
+                    
+                    <!-- Marca personal -->
+                    <div class="mt-3 flex text-center text-sm text-gray-500 dark:text-gray-400 lg:text-right">
+                        Mapa de Colombia · Site by 
+                        <a class="flex items-center justify-center text-center" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/luismateoh/">
+                            <div class="mx-1 w-5 rounded-sm bg-blue-900 py-1 align-middle text-[9px] text-white hover:animate-spin">
+                                <p class="-m-1 align-middle">LM</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </aside>
