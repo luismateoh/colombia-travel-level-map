@@ -79,11 +79,19 @@ export async function loadUserMapData(userId: string): Promise<number[] | null> 
 }
 
 /**
- * Obtiene estadísticas del usuario basadas en sus datos del mapa
- * @param {number[]} provinceLevels - Array con los niveles de cada provincia
- * @returns {Object} - Objeto con estadísticas del usuario
+ * Represents the statistics of a user's map.
  */
-export function getUserMapStats(provinceLevels: number[]) {
+interface UserMapStats {
+  totalScore: number;
+  visitedCount: number;
+  totalProvinces: number;
+  completionPercentage: number;
+}
+
+/**
+ * Obtiene estadísticas del usuario basadas en sus datos del mapa
+ */
+export function getUserMapStats(provinceLevels: number[]): UserMapStats {
   const totalScore = provinceLevels.reduce((sum: number, level: number) => sum + level, 0);
   const visitedCount = provinceLevels.filter((level: number) => level > 0).length;
   const totalProvinces = provinceLevels.length;

@@ -214,7 +214,7 @@
     };
 </script>
 
-<section class="mx-5 w-full max-w-screen-xl items-center justify-between {className}">
+<section class="mx-5 w-full max-w-screen-xl items-center justify-between">
     <div class="flex flex-row flex-wrap my-3">
         <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0">
             <div class="flex flex-col sticky top-20 gap-2">

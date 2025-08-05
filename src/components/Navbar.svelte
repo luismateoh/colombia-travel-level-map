@@ -18,7 +18,7 @@
     });
 </script>
 
-<div
+<nav
         class={`fixed top-0 w-full flex justify-center z-30 transition-all ${
     scrolled
       ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
@@ -47,4 +47,13 @@
             {/if}
         </div>
     </div>
+</nav>
+
+<!-- Main content below the navbar -->
+<div class="w-full">
+    <slot />
 </div>
+
+<style>
+    /* ...existing styles... */
+</style>
