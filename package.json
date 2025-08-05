@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "dev": "astro dev --host",
@@ -21,7 +21,6 @@
     "encoding": "^0.1.13",
     "firebase": "^10.9.0",
     "firebase-admin": "^12.0.0",
-    "request": "^2.88.2",
     "svelte": "^4.2.12",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
