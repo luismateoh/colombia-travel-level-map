@@ -14,7 +14,5 @@ export default defineConfig({
   preview: {
     port: 3000
   },
-  adapter: vercel({
-    nodeVersion: '20'
-  })
+  adapter: vercel()
 });
