@@ -1,6 +1,6 @@
 <script>
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
-    import {getContext} from "svelte";
+    import {getContext, onMount} from "svelte";
 
 
     let color = '#ffffff';
@@ -15,13 +15,57 @@
     let tooltipVisible = false;
     let tooltipPosition = {x: 0, y: 0};
     let tooltipContent = '';
+    let isMounted = false;
+
+    // Solo ejecutar después de que el componente esté montado
+    onMount(() => {
+        isMounted = true;
+
+        // Detectar tema inicial
+        updateTheme();
+
+        // Escuchar cambios en la clase 'dark' del documento
+        const observer = new MutationObserver(() => {
+            updateTheme();
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => observer.disconnect();
+    });
+
+    // Variables para detectar el tema actual
+    let isDarkMode = false;
+
+    const updateTheme = () => {
+        isDarkMode = document.documentElement.classList.contains('dark');
+    };
+
+    // Colores adaptativos para contornos
+    $: strokeColor = isDarkMode ? '#64748b' : '#BFDBFE'; // Gris más oscuro en modo oscuro
+    $: backgroundColor = isDarkMode ? '#4b5563' : '#ffffff'; // Color más claro para territorio en modo oscuro
+    $: svgBackgroundColor = isDarkMode ? '#374151' : 'transparent'; // Fondo del SVG más oscuro
+    
+    // Actualizar el color base según el tema
+    $: color = backgroundColor;
 
     // Función reactiva para actualizar colores cuando cambien los niveles
-    $: if ($provinceLevels) {
+    $: if ($provinceLevels && isMounted) {
+        updateAllProvinceColors();
+    }
+    
+    // Función reactiva para actualizar colores cuando cambie el tema
+    $: if (isMounted && (isDarkMode !== undefined)) {
         updateAllProvinceColors();
     }
 
     const updateAllProvinceColors = () => {
+        // Verificar que estamos en el navegador antes de usar document
+        if (typeof document === 'undefined') return;
+
         // Actualizar colores de todas las provincias sin hover
         PROVINCES.forEach((_, index) => {
             const element = document.querySelector(`path[index="${index}"]`);
@@ -54,7 +98,7 @@
             const targetElement = event.currentTarget;
             const provIndex = targetElement.getAttribute('index');
             const currentColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-            
+
             // Validar que el color sea una string válida antes de usar darkenColor
             if (typeof currentColor === 'string' && currentColor.startsWith('#')) {
                 targetElement.style.fill = darkenColor(currentColor, 20);
@@ -62,7 +106,7 @@
                 // Fallback a color por defecto si el color no es válido
                 targetElement.style.fill = darkenColor('#ffffff', 20);
             }
-            
+
             const position = targetElement.getBoundingClientRect();
             tooltipPosition = {
                 x: position.x + window.scrollX,
@@ -81,7 +125,7 @@
             const targetElement = event.currentTarget;
             const provIndex = targetElement.getAttribute('index');
             const originalColor = $provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color;
-            
+
             // Validar el color antes de aplicarlo
             if (typeof originalColor === 'string') {
                 targetElement.style.fill = originalColor;
@@ -103,22 +147,22 @@
                 console.warn('Invalid color value:', colorValue);
                 return '#ffffff'; // Color por defecto
             }
-            
+
             // Asegurar que el color comience con #
             const cleanColor = colorValue.startsWith('#') ? colorValue : '#' + colorValue;
-            
+
             // Validar formato hexadecimal
             if (!/^#[0-9A-F]{6}$/i.test(cleanColor)) {
                 console.warn('Invalid hex color format:', cleanColor);
                 return '#ffffff'; // Color por defecto
             }
-            
+
             const num = parseInt(cleanColor.replace("#", ""), 16);
             const amt = Math.round(2.55 * percent);
             const R = Math.max(0, Math.min(255, (num >> 16) - amt));
             const B = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) - amt));
             const G = Math.max(0, Math.min(255, (num & 0x0000FF) - amt));
-            
+
             return "#" + (0x1000000 + R * 0x10000 + B * 0x100 + G).toString(16).slice(1);
         } catch (error) {
             console.error('Error in darkenColor:', error);
@@ -147,7 +191,7 @@
     <g id="Background">
         <path
                 id="rect11351"
-                fill-opacity="0"
+                fill={svgBackgroundColor}
                 stroke-width="0.75"
                 d="M -1.031 1.031 H 841.288 V 1155 H 9 z"
                 onClick={(event) => handleOutsideClick(event)}
@@ -169,7 +213,7 @@
                     index={provIndex}
                     fill={$provinceLevels[provIndex] ? PROVINCE_LEVEL_FILLS[$provinceLevels[provIndex]] : color}
                     fill-rule="nonzero"
-                    stroke="#BFDBFE"
+                    stroke={strokeColor}
                     stroke-dasharray="none"
                     stroke-dashoffset="0"
                     stroke-linecap="butt"

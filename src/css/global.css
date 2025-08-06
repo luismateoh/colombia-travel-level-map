@@ -240,5 +240,5 @@ body {
 }
 
 .card-hover {
-  @apply card hover:shadow-lg dark:hover:shadow-gray-900/25 hover:-translate-y-1;
+  @apply card;
 }

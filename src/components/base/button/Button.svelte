@@ -13,21 +13,21 @@
 
     const buttonVariants = {
         google:
-            "disabled:opacity-50 disabled:pointer-events-none group relative w-full flex justify-center items-center py-2 px-4 border border-gray-300 text-sm font-medium rounded-md bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+            "disabled:opacity-50 disabled:pointer-events-none group relative w-full flex justify-center items-center py-2 px-4 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-900 dark:text-gray-100",
         outlined:
-            "py-2 px-4 rounded-md border border-gray-300 text-black bg-white hover:bg-gray-50 transition duration-200 ease-in-out",
+            "py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 text-black dark:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200 ease-in-out",
         ghost:
-            "relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100",
+            "relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100",
         smallGhost:
-            "relative flex w-full items-center justify-start space-x-1 rounded-md p-1 text-left text-sm transition-all duration-75 hover:bg-gray-100",
+            "relative flex w-full items-center justify-start space-x-1 rounded-md p-1 text-left text-sm transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100",
         rounded:
-            "rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white hover:bg-black/80 transition duration-200 ease-in-out ",
+            "rounded-full border border-black dark:border-white bg-black dark:bg-white p-1.5 px-4 text-sm text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 transition duration-200 ease-in-out",
         inRow:
-            "flex items-center justify-start gap-2 px-2 py-1 hover:bg-gray-200 w-full text-left",
+            "flex items-center justify-start gap-2 px-2 py-1 hover:bg-gray-200 dark:hover:bg-gray-600 w-full text-left text-gray-900 dark:text-gray-100",
         xMark:
-            "flex items-center justify-center hover:bg-gray-200 w-full",
+            "flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 w-full text-gray-900 dark:text-gray-100",
         default:
-            "flex justify-center items-center disabled:opacity-30 disabled:pointer-events-none py-2 px-4 rounded-md text-white bg-black hover:bg-black/80 focus:outline-none focus:ring-2 transition duration-200 ease-in-out",
+            "flex justify-center items-center disabled:opacity-30 disabled:pointer-events-none py-2 px-4 rounded-md text-white bg-black dark:bg-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 focus:outline-none focus:ring-2 transition duration-200 ease-in-out",
     };
 
     // This function returns true if 'href' is a non-empty string
@@ -64,7 +64,7 @@
     >
         {#if icon}
             <div>
-                <svelte:component color="#374151" this={icon}/>
+                <svelte:component color="currentColor" this={icon}/>
             </div>
         {/if}
         <slot/>

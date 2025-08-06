@@ -38,7 +38,7 @@
 <div class="language-selector relative">
     <button
         on:click={toggleDropdown}
-        class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+        class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
         aria-label="Cambiar idioma / Change language"
     >
         <span class="text-lg">{currentLang.flag}</span>
@@ -49,19 +49,20 @@
     </button>
 
     {#if isOpen}
-        <div class="absolute right-0 mt-1 w-44 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+        <div class="absolute right-0 mt-1 w-44 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-600 z-50">
             <div class="py-1">
                 {#each languages as language}
                     <button
                         on:click={() => selectLanguage(language.code)}
-                        class="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        class="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         class:bg-gray-50={$currentLanguage === language.code}
+                        class:dark:bg-gray-700={$currentLanguage === language.code}
                         class:font-medium={$currentLanguage === language.code}
                     >
                         <span class="text-lg">{language.flag}</span>
                         <span>{language.name}</span>
                         {#if $currentLanguage === language.code}
-                            <span class="ml-auto text-blue-600">✓</span>
+                            <span class="ml-auto text-blue-600 dark:text-blue-400">✓</span>
                         {/if}
                     </button>
                 {/each}

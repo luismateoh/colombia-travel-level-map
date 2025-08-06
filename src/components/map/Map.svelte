@@ -311,25 +311,6 @@
         <div class="flex flex-row flex-wrap my-3">
             <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0 animate-slide-in-right">
                 <div class="flex flex-col sticky top-20 gap-2">
-                    <!-- Mensaje de sitio en construcción -->
-                    <div class="card-hover p-4 w-full bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-orange-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-bold text-orange-800 dark:text-orange-200">
-                                    {$t('siteUnderConstruction')}
-                                </h3>
-                                <p class="text-xs text-orange-700 dark:text-orange-300 mt-1">
-                                    {$t('improvingExperience')}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Estadísticas del usuario -->
                     <div class="card-hover p-4 w-full bg-gray-50 dark:bg-gray-800/50">
                         <div class="flex flex-row justify-between items-center">
@@ -402,43 +383,43 @@
                     {/if}
 
                     <!-- Guía de niveles -->
-                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                        <h3 class="text-md font-bold text-gray-900 mb-3">{$t('levelGuide')}</h3>
+                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 dark:shadow-gray-900/25 bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
+                        <h3 class="text-md font-bold text-gray-900 dark:text-gray-100 mb-3">{$t('levelGuide')}</h3>
                         <ul class="nav flex flex-col overflow-hidden align-middle gap-2">
                             {#each MENU_OPTIONS as {icon, label, level, fill, textColor, textDescription}}
                                 <li id={level} class="flex flex-row gap-3">
                                     <span
-                                        class="flex justify-center align-middle mt-1 items-center h-8 min-w-8 rounded-md border border-gray-300"
+                                        class="flex justify-center align-middle mt-1 items-center h-8 min-w-8 rounded-md border border-gray-300 dark:border-gray-600"
                                         style="background: {fill}; opacity:1;"
                                     >
                                         <svelte:component this={icon} color={textColor}/>
                                     </span>
                                     <div class="flex flex-col">
-                                        <span class="text-sm font-bold text-gray-900">
+                                        <span class="text-sm font-bold text-gray-900 dark:text-gray-100">
                                             {$t(`levels.${getLevelTranslationKey(label)}`)}
                                         </span>
-                                        <p class="text-xs text-gray-600">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">
                                             {$t(`levels.${getLevelTranslationKey(label)}Description`)}
                                         </p>
                                     </div>
                                 </li>
                             {/each}
                         </ul>
-                        <div class="mt-3 pt-3 border-t border-gray-200">
-                            <p class="text-xs text-gray-600">
+                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
                                 {$t('levelGuideTooltip')}
                             </p>
                         </div>
                     </div>
 
                     <!-- Botones de descarga -->
-                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                        <h3 class="text-md font-bold text-gray-900 mb-3">{$t('downloadMap')}</h3>
+                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 dark:shadow-gray-900/25 bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
+                        <h3 class="text-md font-bold text-gray-900 dark:text-gray-100 mb-3">{$t('downloadMap')}</h3>
                         <div class="flex flex-col gap-2">
                             <button
                                 on:click={handleDownloadImage}
                                 disabled={isDownloading}
-                                class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
+                                class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 dark:disabled:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
                             >
                                 <Download size="16" color="white" />
                                 {#if isDownloading}
@@ -455,7 +436,7 @@
                                 {$t('downloadAsJSON')}
                             </button>
                         </div>
-                        <p class="text-xs text-gray-600 mt-2">
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">
                             {#if $currentUser}
                                 {$t('saveAndShare')}
                             {:else}
@@ -466,9 +447,9 @@
 
                     <!-- Opción de resetear mapa -->
                     {#if $currentUser}
-                        <div class="p-4 w-full rounded-lg border shadow-sm shadow-red-100 bg-red-50">
-                            <h3 class="text-md font-bold text-red-800 mb-3">{$t('resetMap')}</h3>
-                            <p class="text-sm text-red-700 mb-3">
+                        <div class="p-4 w-full rounded-lg border shadow-sm shadow-red-100 dark:shadow-gray-900/25 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+                            <h3 class="text-md font-bold text-red-800 dark:text-red-200 mb-3">{$t('resetMap')}</h3>
+                            <p class="text-sm text-red-700 dark:text-red-300 mb-3">
                                 {$t('resetDescription')}
                             </p>
                             <button
@@ -481,26 +462,26 @@
                     {/if}
 
                     <!-- Información del proyecto -->
-                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
-                        <h3 class="text-md font-bold text-gray-900 mb-3">{$t('aboutProject')}</h3>
-                        <p class="text-sm text-gray-700 mb-3">
+                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 dark:shadow-gray-900/25 bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
+                        <h3 class="text-md font-bold text-gray-900 dark:text-gray-100 mb-3">{$t('aboutProject')}</h3>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
                             {$t('projectDescription')}
                         </p>
                         <div class="flex flex-col gap-1 text-xs">
                             <a href="https://zhung.com.tw/japanex/" target="_blank" rel="noopener noreferrer" 
-                                class="text-blue-600 hover:text-blue-800 underline">
+                                class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline">
                                 {$t('originalJapanMap')}
                             </a>
                             <a href="https://github.com/OSSPhilippines/philippines-travel-level-map" target="_blank" rel="noopener noreferrer"
-                                class="text-blue-600 hover:text-blue-800 underline">
+                                class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline">
                                 {$t('philippinesVersion')}
                             </a>
                             <a href="https://github.com/aumentada/colombia" target="_blank" rel="noopener noreferrer"
-                                class="text-blue-600 hover:text-blue-800 underline">
+                                class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline">
                                 {$t('colombiaMapData')}
                             </a>
                         </div>
-                        <p class="text-xs text-gray-600 mt-2">
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">
                             {$t('builtWith')}
                         </p>
                         
@@ -508,7 +489,7 @@
                         <div class="mt-3 flex text-center text-sm text-gray-500 dark:text-gray-400 lg:text-right">
                             {$t('title')} · {$t('siteBy')} 
                             <a class="flex items-center justify-center text-center" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/luismateoh/">
-                                <div class="mx-1 w-5 rounded-sm bg-blue-900 py-1 align-middle text-[9px] text-white hover:animate-spin">
+                                <div class="mx-1 w-5 rounded-sm bg-blue-900 dark:bg-blue-600 py-1 align-middle text-[9px] text-white hover:animate-spin">
                                     <p class="-m-1 align-middle">LM</p>
                                 </div>
                             </a>
@@ -518,7 +499,7 @@
             </aside>
 
             <main class="w-full md:w-2/3 pt-1 px-2 mb-2 md:mb-0">
-                <div class="w-full rounded-xl bg-blue-200 p-2 border shadow-sm shadow-indigo-100">
+                <div class="w-full rounded-xl bg-blue-200 dark:bg-gray-700 p-2 border shadow-sm shadow-indigo-100 dark:shadow-gray-900/25 border-gray-200 dark:border-gray-600">
                     <ColombiaMap
                         bind:selectedProvinceIndex={selectedProvinceIndex}
                         bind:menuPosition={menuPosition}
@@ -527,16 +508,16 @@
                     
                     <!-- Overlay de carga discreto solo para datos del usuario -->
                     {#if isLoadingData && $currentUser}
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg flex items-center gap-2">
-                            <div class="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                            <span class="text-sm text-gray-600">{$t('loadingProgress')}</span>
+                        <div class="absolute bottom-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg flex items-center gap-2 border border-gray-200 dark:border-gray-600">
+                            <div class="w-4 h-4 border-2 border-blue-600 dark:border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                            <span class="text-sm text-gray-600 dark:text-gray-300">{$t('loadingProgress')}</span>
                         </div>
                     {/if}
                 </div>
 
                 <!-- Menú de selección de nivel -->
                 {#if menuVisible}
-                    <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+                    <div class="z-10 bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700 rounded-lg shadow-lg dark:shadow-gray-900/50 w-44 border border-gray-200 dark:border-gray-600"
                         style={
                                 `position: absolute;
                                 top: ${menuPosition.y}px;
@@ -551,18 +532,18 @@
                                 if (event.key === 'Enter' || event.key === ' ')
                                 {menuVisible = false;}}
                             }>
-                           <Cross color="#000000"/>
+                           <Cross color="currentColor"/>
                         </Button>
-                        <div class="flex flex-col px-2 py-2 text-sm text-gray-900">
+                        <div class="flex flex-col px-2 py-2 text-sm text-gray-900 dark:text-gray-100">
                             <span class="font-bold">
                                 {selectedProvinceName}
                             </span>
-                            <span class="text-xs text-gray-700">
+                            <span class="text-xs text-gray-700 dark:text-gray-400">
                                 {selectedProvinceCapital}
                             </span>
                         </div>
                         <div>
-                            <div class="py-1 text-sm text-gray-700">
+                            <div class="py-1 text-sm text-gray-700 dark:text-gray-300">
                                 {#each MENU_OPTIONS as {icon, label, level}}
                                     <Button
                                         icon={icon}
