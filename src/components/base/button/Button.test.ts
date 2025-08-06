@@ -4,78 +4,78 @@ import Button from './Button.svelte';
 
 describe('Button Component', () => {
   it('renders button with default variant', () => {
-    render(Button, { props: {} });
+    const { getByRole } = render(Button, { props: {} });
     
-    const button = screen.getByRole('button');
+    const button = getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('bg-black'); // Default variant classes
   });
 
   it('renders as link when href is provided', () => {
-    render(Button, { 
+    const { getByRole } = render(Button, { 
       props: { 
         href: '/test-link'
       } 
     });
     
-    const link = screen.getByRole('button'); // Still has button role
+    const link = getByRole('button'); // Still has button role
     expect(link.tagName).toBe('A');
     expect(link).toHaveAttribute('href', '/test-link');
   });
 
   it('applies correct variant classes', () => {
-    render(Button, { 
+    const { getByRole } = render(Button, { 
       props: { 
         variant: 'google'
       } 
     });
     
-    const button = screen.getByRole('button');
+    const button = getByRole('button');
     expect(button).toHaveClass('border-gray-300', 'bg-white');
   });
 
   it('applies custom className', () => {
-    render(Button, { 
+    const { getByRole } = render(Button, { 
       props: { 
         class: 'custom-class'
       } 
     });
     
-    const button = screen.getByRole('button');
+    const button = getByRole('button');
     expect(button).toHaveClass('custom-class');
   });
 
   it('handles click events', async () => {
     const handleClick = vi.fn();
     
-    const { component } = render(Button, { props: {} });
-    component.$on('click', handleClick);
+    const rendered = render(Button, { props: {} });
+    rendered.component.$on('click', handleClick);
     
-    const button = screen.getByRole('button');
+    const button = rendered.getByRole('button');
     await fireEvent.click(button);
     
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
   it('supports different button types', () => {
-    render(Button, { 
+    const { getByRole } = render(Button, { 
       props: { 
         type: 'submit'
       } 
     });
     
-    const button = screen.getByRole('button');
+    const button = getByRole('button');
     expect(button).toHaveAttribute('type', 'submit');
   });
 
   it('handles disabled state', () => {
-    render(Button, { 
+    const { getByRole } = render(Button, { 
       props: { 
         disabled: true
       } 
     });
     
-    const button = screen.getByRole('button');
+    const button = getByRole('button');
     expect(button).toBeDisabled();
   });
 
@@ -88,13 +88,13 @@ describe('Button Component', () => {
     const variants = ['google', 'outlined', 'ghost', 'smallGhost', 'rounded', 'inRow', 'xMark', 'default'];
     
     variants.forEach(variant => {
-      const { unmount } = render(Button, { 
+      const { unmount, getByRole } = render(Button, { 
         props: { 
           variant: variant as any
         } 
       });
       
-      const button = screen.getByRole('button');
+      const button = getByRole('button');
       expect(button).toBeInTheDocument();
       
       unmount();

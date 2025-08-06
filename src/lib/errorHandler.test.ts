@@ -121,7 +121,8 @@ describe('ErrorHandler', () => {
 
     it('does nothing when window is undefined', () => {
       const originalWindow = global.window;
-      delete global.window;
+      // @ts-ignore - Temporarily making window undefined for testing
+      global.window = undefined;
 
       expect(() => setupGlobalErrorHandling()).not.toThrow();
 

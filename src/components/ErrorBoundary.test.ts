@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import ErrorBoundary from './ErrorBoundary.svelte';
 
@@ -22,12 +22,12 @@ describe('ErrorBoundary', () => {
   });
 
   it('sets up error event listeners on mount', async () => {
-    const { component } = render(ErrorBoundary);
+    const component = render(ErrorBoundary);
     
     // Simply verify the component mounted successfully
     // In a real environment, onMount would set up the event listeners
     expect(component).toBeTruthy();
-    expect(component.$$.ctx).toBeDefined();
+    expect(component.component).toBeDefined();
   });
 
   it('component structure is correct', () => {

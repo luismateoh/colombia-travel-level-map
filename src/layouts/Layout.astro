@@ -92,7 +92,7 @@ const finalStructuredData = structuredData || defaultStructuredData;
     <link rel="preconnect" href="https://firebase.googleapis.com" />
     
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(finalStructuredData)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(finalStructuredData)} />
     
     <!-- Prefetch critical resources -->
     <link rel="prefetch" href="/colombia-map-icon.svg" />
