@@ -94,6 +94,16 @@ const finalStructuredData = structuredData || defaultStructuredData;
     <!-- Structured Data -->
     <script type="application/ld+json" is:inline set:html={JSON.stringify(finalStructuredData)} />
     
+    <!-- Theme initialization script -->
+    <script is:inline>
+      // Aplicar tema inmediatamente para evitar flash
+      (function() {
+        const theme = localStorage.getItem('theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      })();
+    </script>
+    
     <!-- Prefetch critical resources -->
     <link rel="prefetch" href="/colombia-map-icon.svg" />
   </head>

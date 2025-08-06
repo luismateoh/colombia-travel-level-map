@@ -2,6 +2,7 @@
     import {onMount} from "svelte";
     import UserDropdown from "@/components/UserDropdown.svelte";
     import LanguageSelector from "@/components/LanguageSelector.svelte";
+    import ThemeToggle from "@/components/ThemeToggle.svelte";
     import { currentUser, isLoading } from "@/firebase/utils/authStore";
     import { t, initializeLanguage } from "@/lib/i18n";
     import type {User} from "firebase/auth";
@@ -27,30 +28,37 @@
 </script>
 
 <nav
-        class={`fixed top-0 w-full flex justify-center z-30 transition-all ${
+        class={`fixed top-0 w-full flex justify-center z-30 transition-all duration-300 ${
     scrolled
-      ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
-      : "bg-white/0"
+      ? "border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl"
+      : "bg-white/0 dark:bg-gray-900/0"
   }`}
 >
     <div
             class="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full"
     >
-        <a class="flex items-center font-display text-xl" href="/">
+        <a class="flex items-center font-display text-xl hover:scale-105 transition-transform duration-200" href="/">
             <img
                     alt="Colombian flag logo"
-                    class="mr-2 rounded-sm"
+                    class="mr-2 rounded-sm transition-transform duration-200 hover:rotate-3"
                     height="40"
                     src="/flag.svg"
                     width="40"
             />
-            <p class="font-bold">{$t('title')}</p>
+            <p class="font-bold text-gray-900 dark:text-gray-100">{$t('title')}</p>
         </a>
 
         <div class="flex gap-3 items-center">
-            <LanguageSelector />
+            <div class="animate-slide-in-right">
+                <LanguageSelector />
+            </div>
+            <div class="animate-slide-in-right" style="animation-delay: 0.1s;">
+                <ThemeToggle />
+            </div>
             {#if displayUser}
-                <UserDropdown user={displayUser}/>
+                <div class="animate-slide-in-right" style="animation-delay: 0.2s;">
+                    <UserDropdown user={displayUser}/>
+                </div>
             {/if}
         </div>
     </div>

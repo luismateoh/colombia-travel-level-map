@@ -289,7 +289,7 @@
 <ErrorBoundary>
     <!-- Error notification -->
     {#if showError}
-        <div class="fixed top-4 right-4 z-50 max-w-sm bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
+        <div class="fixed top-4 right-4 z-50 max-w-sm bg-red-100 dark:bg-red-900/80 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 px-4 py-3 rounded shadow-lg animate-slide-in-right backdrop-blur-sm">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -299,7 +299,7 @@
                 </div>
                 <button 
                     on:click={() => showError = false}
-                    class="ml-2 text-red-500 hover:text-red-700"
+                    class="ml-2 text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-200 transition-colors duration-200"
                 >
                     ✕
                 </button>
@@ -309,10 +309,10 @@
 
     <section class="mx-5 w-full max-w-screen-xl items-center justify-between {className}">
         <div class="flex flex-row flex-wrap my-3">
-            <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0">
+            <aside class="order-last w-full md:w-1/3 px-2 mb-2 md:mb-0 animate-slide-in-right">
                 <div class="flex flex-col sticky top-20 gap-2">
                     <!-- Mensaje de sitio en construcción -->
-                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-orange-100 bg-orange-50">
+                    <div class="card-hover p-4 w-full bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-orange-400" viewBox="0 0 20 20" fill="currentColor">
@@ -320,10 +320,10 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-bold text-orange-800">
+                                <h3 class="text-sm font-bold text-orange-800 dark:text-orange-200">
                                     {$t('siteUnderConstruction')}
                                 </h3>
-                                <p class="text-xs text-orange-700 mt-1">
+                                <p class="text-xs text-orange-700 dark:text-orange-300 mt-1">
                                     {$t('improvingExperience')}
                                 </p>
                             </div>
@@ -331,32 +331,32 @@
                     </div>
 
                     <!-- Estadísticas del usuario -->
-                    <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
+                    <div class="card-hover p-4 w-full bg-gray-50 dark:bg-gray-800/50">
                         <div class="flex flex-row justify-between items-center">
                             <div class="flex flex-col">
-                                <span class="text-md font-bold text-gray-900">
+                                <span class="text-md font-bold text-gray-900 dark:text-gray-100">
                                     {$t('totalScore')}
                                 </span>
-                                <p class="text-sm text-gray-700">
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
                                     {$t('totalScoreDescription')}
                                 </p>
                             </div>
                             <div class="flex flex-row items-center gap-2">
-                                <span class="text-2xl font-bold text-gray-900">
+                                <span class="text-2xl font-bold text-gray-900 dark:text-gray-100 transition-all duration-300">
                                     {totalLevel}
                                 </span>
                                 {#if $isLoading}
-                                    <span class="text-xs text-gray-500">{$t('loading')}</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">{$t('loading')}</span>
                                 {:else if isSaving}
-                                    <span class="text-xs text-blue-600 flex items-center gap-1">
-                                        <div class="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                                    <span class="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                                        <div class="w-3 h-3 border-2 border-blue-600 dark:border-blue-400 border-t-transparent rounded-full animate-spin"></div>
                                     </span>
                                 {:else if $currentUser && hasLoadedInitialData}
                                     <div class="group relative">
-                                        <span class="text-green-600 cursor-default text-lg">✅</span>
-                                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                                        <span class="text-green-600 dark:text-green-400 cursor-default text-lg animate-bounce-custom">✅</span>
+                                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
                                             {$t('savedInCloud')}
-                                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800 dark:border-t-gray-200"></div>
                                         </div>
                                     </div>
                                 {/if}
@@ -366,32 +366,32 @@
 
                     <!-- Estadísticas adicionales -->
                     {#if $currentUser}
-                        <div class="p-4 w-full rounded-lg border shadow-sm shadow-indigo-100 bg-gray-50">
+                        <div class="card-hover p-4 w-full bg-gray-50 dark:bg-gray-800/50">
                             <div class="flex flex-col gap-2">
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-700">{$t('visitedDepartments')}:</span>
-                                    <span class="text-sm font-bold text-gray-900">{visitedCount}/{PROVINCES.length}</span>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">{$t('visitedDepartments')}:</span>
+                                    <span class="text-sm font-bold text-gray-900 dark:text-gray-100">{visitedCount}/{PROVINCES.length}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-700">{$t('progress')}:</span>
-                                    <span class="text-sm font-bold text-gray-900">{completionPercentage}%</span>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">{$t('progress')}:</span>
+                                    <span class="text-sm font-bold text-gray-900 dark:text-gray-100">{completionPercentage}%</span>
                                 </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-500 ease-out" 
                                         style="width: {completionPercentage}%"></div>
                                 </div>
-                                <div class="text-xs text-gray-600 mt-1">
+                                <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
                                     👤 {$currentUser.email}
                                 </div>
                             </div>
                         </div>
                     {:else if !$isLoading}
-                        <div class="p-4 w-full rounded-lg border shadow-sm shadow-yellow-100 bg-yellow-50">
+                        <div class="card-hover p-4 w-full bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
                             <div class="flex flex-col">
-                                <span class="text-md font-bold text-yellow-800">
+                                <span class="text-md font-bold text-yellow-800 dark:text-yellow-200">
                                     {$t('signInToSave')}
                                 </span>
-                                <p class="text-sm text-yellow-700 mb-3">
+                                <p class="text-sm text-yellow-700 dark:text-yellow-300 mb-3">
                                     {$t('progressWillBeSaved')}
                                 </p>
                                 <div class="flex justify-center">
