@@ -2,8 +2,20 @@
     import {PROVINCE_LEVEL_FILLS, PROVINCES} from '@/components/utils/constants.svelte';
     import {getContext, onMount} from "svelte";
 
-
+    // Inicializar colores correctos desde el inicio para evitar flash blanco
+    let isDarkMode = false;
     let color = '#ffffff';
+    
+    // Detectar tema inicial de forma síncrona para evitar flash
+    if (typeof document !== 'undefined') {
+        isDarkMode = document.documentElement.classList.contains('dark');
+        // Establecer color inicial correcto basado en el tema
+        color = isDarkMode ? '#4b5563' : '#ffffff';
+    } else if (typeof window !== 'undefined' && window.__theme) {
+        // Fallback usando el tema establecido en el script de inicialización
+        isDarkMode = window.__theme === 'dark';
+        color = isDarkMode ? '#4b5563' : '#ffffff';
+    }
 
     const provinceLevels = getContext('provinceLevels');
 
@@ -20,36 +32,29 @@
     // Solo ejecutar después de que el componente esté montado
     onMount(() => {
         isMounted = true;
-
-        // Detectar tema inicial
-        updateTheme();
-
+        
+        // Actualizar tema inicial inmediatamente
+        isDarkMode = document.documentElement.classList.contains('dark');
+        
         // Escuchar cambios en la clase 'dark' del documento
         const observer = new MutationObserver(() => {
-            updateTheme();
+            isDarkMode = document.documentElement.classList.contains('dark');
         });
-
+        
         observer.observe(document.documentElement, {
             attributes: true,
             attributeFilter: ['class']
         });
-
+        
         return () => observer.disconnect();
     });
 
-    // Variables para detectar el tema actual
-    let isDarkMode = false;
-
-    const updateTheme = () => {
-        isDarkMode = document.documentElement.classList.contains('dark');
-    };
-
-    // Colores adaptativos para contornos
-    $: strokeColor = isDarkMode ? '#64748b' : '#BFDBFE'; // Gris más oscuro en modo oscuro
-    $: backgroundColor = isDarkMode ? '#4b5563' : '#ffffff'; // Color más claro para territorio en modo oscuro
-    $: svgBackgroundColor = isDarkMode ? '#374151' : 'transparent'; // Fondo del SVG más oscuro
+    // Colores adaptativos para contornos - usar computed values más inmediatos
+    $: strokeColor = isDarkMode ? '#64748b' : '#BFDBFE';
+    $: backgroundColor = isDarkMode ? '#4b5563' : '#ffffff';
+    $: svgBackgroundColor = isDarkMode ? '#374151' : 'transparent';
     
-    // Actualizar el color base según el tema
+    // Actualizar el color base según el tema inmediatamente
     $: color = backgroundColor;
 
     // Función reactiva para actualizar colores cuando cambien los niveles

@@ -3,6 +3,12 @@ import { getAuth } from 'firebase-admin/auth';
 import { app } from '../../../firebase/server';
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
+  // Verificar que la app de Firebase esté inicializada
+  if (!app) {
+    console.error('❌ Firebase Admin no está inicializado');
+    return new Response('Server configuration error', { status: 500 });
+  }
+
   const auth = getAuth(app);
 
   // Obtener el token del header Authorization

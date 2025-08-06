@@ -15,8 +15,7 @@ To convert your service account credentials to a `.env` file:
 3. Execute the script with Node.js by running:
 
    ```bash
-   node scripts/createEnvFromServiceAccount.js`
-
+   node scripts/createEnvFromServiceAccount.js
    ```
 
 4. Upon successful execution, a `.env` file will be created in the root of your project directory with all the required Firebase environment variables set up.
