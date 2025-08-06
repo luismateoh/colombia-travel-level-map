@@ -303,13 +303,26 @@ export async function downloadMapImage(userName: string, totalScore: number, vis
  * @param {string} userName - Nombre del usuario
  * @param {Array} provinceLevels - Datos de los niveles
  * @param {Object} stats - Estadísticas del usuario
+ * @param {Array} provinces - Array de departamentos con sus nombres
  */
 export function downloadMapData(userName: string, provinceLevels: number[], stats: {
   totalScore: number;
   visitedCount: number;
   totalProvinces: number;
   completionPercentage: number;
-}) {
+}, provinces: Array<{id: string, capital: string}>) {
+  
+  // Crear array con nombres de departamentos y sus niveles
+  const departamentosConNiveles = provinceLevels.map((nivel, index) => {
+    const departamento = provinces[index];
+    return {
+      departamento: departamento?.id || `Departamento_${index + 1}`,
+      capital: departamento?.capital || 'N/A',
+      nivel: nivel,
+      experiencia: getNivelDescription(nivel)
+    };
+  });
+
   const data = {
     usuario: userName || 'Usuario',
     fecha: new Date().toISOString(),
@@ -319,10 +332,24 @@ export function downloadMapData(userName: string, provinceLevels: number[], stat
       totalDepartamentos: stats.totalProvinces,
       porcentajeCompletado: stats.completionPercentage
     },
+    departamentos: departamentosConNiveles,
+    // También mantener el formato anterior para compatibilidad
     datosDepartamentos: provinceLevels,
+    leyenda: {
+      niveles: [
+        { nivel: 0, descripcion: 'Nunca estuve ahí', color: '#ffffff' },
+        { nivel: 1, descripcion: 'Pasé por ahí', color: '#3598db' },
+        { nivel: 2, descripcion: 'Aterricé ahí', color: '#30cc70' },
+        { nivel: 3, descripcion: 'Visité ahí', color: '#f3c218' },
+        { nivel: 4, descripcion: 'Me quedé ahí', color: '#d58337' },
+        { nivel: 5, descripcion: 'Viví ahí', color: '#e84c3d' }
+      ]
+    },
     metadata: {
-      version: '1.0',
-      aplicacion: 'Mapa de Viajes Colombia'
+      version: '2.0',
+      aplicacion: 'Mapa de Viajes Colombia',
+      descripcion: 'Datos de experiencias de viaje por departamentos de Colombia',
+      url: 'https://colombia-travel-level-map.vercel.app/'
     }
   };
 
@@ -338,4 +365,21 @@ export function downloadMapData(userName: string, provinceLevels: number[], stat
   document.body.removeChild(link);
   
   URL.revokeObjectURL(url);
+}
+
+/**
+ * Obtiene la descripción del nivel de experiencia
+ * @param {number} nivel - Nivel numérico (0-5)
+ * @returns {string} - Descripción del nivel
+ */
+function getNivelDescription(nivel: number): string {
+  const descripciones = {
+    0: 'Nunca estuve ahí',
+    1: 'Pasé por ahí',
+    2: 'Aterricé ahí',
+    3: 'Visité ahí',
+    4: 'Me quedé ahí',
+    5: 'Viví ahí'
+  };
+  return descripciones[nivel as keyof typeof descripciones] || 'Nivel desconocido';
 }

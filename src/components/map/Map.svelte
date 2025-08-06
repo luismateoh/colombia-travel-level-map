@@ -223,7 +223,7 @@
     const handleDownloadData = () => {
         try {
             const userName = $currentUser?.displayName || $currentUser?.email || 'Usuario';
-            downloadMapData(userName, $provinceLevels, stats);
+            downloadMapData(userName, $provinceLevels, stats, PROVINCES);
             console.log('✅ Datos descargados como JSON');
         } catch (error) {
             console.error('❌ Error descargando datos:', error);
