@@ -16,6 +16,22 @@
     let tooltipPosition = {x: 0, y: 0};
     let tooltipContent = '';
 
+    // Función reactiva para actualizar colores cuando cambien los niveles
+    $: if ($provinceLevels) {
+        updateAllProvinceColors();
+    }
+
+    const updateAllProvinceColors = () => {
+        // Actualizar colores de todas las provincias sin hover
+        PROVINCES.forEach((_, index) => {
+            const element = document.querySelector(`path[index="${index}"]`);
+            if (element && !element.matches(':hover')) {
+                const newColor = $provinceLevels[index] ? PROVINCE_LEVEL_FILLS[$provinceLevels[index]] : color;
+                element.style.fill = newColor;
+            }
+        });
+    };
+
     const handleProvinceClick = (event) => {
         const offsetY =
             event.target.getBoundingClientRect().y + 210 - window.innerHeight < 0
