@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import GoogleIcon from "@/components/icons/GoogleIcon.svelte";
   import handleGoogleSignIn from "@/firebase/utils/auth/handleGoogleSignIn";
-  import Spinner from "../icons/Spinner.svelte";
   import { Button } from "../base/button";
   import { t } from "@/lib/i18n";
 
@@ -17,7 +16,7 @@
 
 <Button variant="google" on:click={signIn} disabled={loading}>
   {#if loading}
-    <Spinner />
+    <div class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin mr-2"></div>
     {$t('pleaseWait')}
   {:else}
     <GoogleIcon />

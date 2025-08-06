@@ -1,6 +1,6 @@
 <script>
     import ColombiaMap from './ColombianMap.svelte';
-    import {PROVINCES, MENU_OPTIONS, PROVINCE_LEVEL_FILLS} from '@/components/utils/constants.svelte';
+    import {PROVINCES, MENU_OPTIONS} from '@/components/utils/constants.svelte';
     import {onMount, setContext} from 'svelte';
     import {writable} from "svelte/store";
     import {Button} from "@/components/base/button";

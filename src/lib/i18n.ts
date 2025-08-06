@@ -102,12 +102,6 @@ export const translations = {
       typeConfirm: 'Escribe la palabra "confirmar":'
     },
     
-    // Dashboard
-    dashboard: 'Panel de Control',
-    welcome: '¡Bienvenido, {name}!',
-    welcomeMessage: 'Nos alegramos de verte por aquí. ¿Listo para sumergirte?',
-    editAccount: 'Editar tu cuenta',
-    
     // Meta
     pageTitle: 'Mapa de Colombia',
     pageDescription: 'Mapa de Colombia para visualizar los departamentos visitados'
@@ -207,12 +201,6 @@ export const translations = {
       departments: 'How many departments does Colombia have? (32 or 33)',
       typeConfirm: 'Type the word "confirm":'
     },
-    
-    // Dashboard
-    dashboard: 'Dashboard',
-    welcome: 'Welcome, {name}!',
-    welcomeMessage: 'We are glad to see you here. Ready to dive in?',
-    editAccount: 'Edit your account',
     
     // Meta
     pageTitle: 'Colombia Map',
